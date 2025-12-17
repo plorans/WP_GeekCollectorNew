@@ -38,3 +38,17 @@
   RewriteCond %{REQUEST_METHOD} OPTIONS
   RewriteRule ^(.*)$ $1 [R=200,L,E=HTTP_ORIGIN:%{HTTP:ORIGIN}]
 </IfModule>
+
+# -------------------------
+# BEGIN WordPress (NO TOCAR)
+# -------------------------
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
+  RewriteBase /
+  RewriteRule ^index\.php$ - [L]
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond %{REQUEST_FILENAME} !-d
+  RewriteRule . /index.php [L]
+</IfModule>
+# END WordPress
