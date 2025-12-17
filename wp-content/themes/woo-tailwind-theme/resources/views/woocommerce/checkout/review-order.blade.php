@@ -1,5 +1,5 @@
 {{-- resources/views/woocommerce/checkout/review-order.blade.php --}}
-<div class="space-y-6">
+<div class="woocommerce-checkout-review-order-table space-y-6">
     <h2 class="mb-4 flex items-center text-2xl font-bold text-gray-800">
         <svg class="mr-2 h-6 w-6 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -70,7 +70,7 @@
 
             @if (WC()->cart->show_shipping())
                 <div class="mt-4 rounded-lg">
-                    <h4 class="font-medium text-blue-800 mb-2">Métodos de envío disponibles:</h4>
+                    <h4 class="mb-2 text-lg font-semibold text-gray-800">Métodos de envío disponibles:</h4>
                     {!! wc_cart_totals_shipping_html() !!}
                 </div>
             @endif
@@ -78,15 +78,32 @@
     @endif
 
     {{-- Totales --}}
-    <div class="rounded-xl border border-gray-200 bg-gradient-to-br from-white to-gray-50 p-5 mb-4 shadow-sm">
+    <div class="mb-4 rounded-xl border border-gray-200 bg-gradient-to-br from-white to-gray-50 p-5 shadow-sm">
         <h3 class="mb-4 text-lg font-semibold text-gray-800">{{ __('Resumen de pago', 'woocommerce') }}</h3>
 
         <div id="custom-order-review" class="woocommerce-checkout-review-order">
-            <ul class="space-y-3 text-gray-700">
+            <ul class="space-y-1 text-gray-700">
                 <li class="flex items-center justify-between border-b border-gray-100 py-2">
                     <span class="font-medium">{{ __('Subtotal', 'woocommerce') }}</span>
                     <span class="font-medium">{!! wc_cart_totals_subtotal_html() !!}</span>
                 </li>
+                @php
+                    $shipping_total = WC()->cart->get_shipping_total();
+                @endphp
+
+                @if ($shipping_total > 0)
+                    <li class="flex items-center justify-between border-b border-gray-100 py-2">
+                        <div class="flex items-center">
+                            <span class="font-medium text-gray-700">
+                                {{ __('Envío', 'woocommerce') }}
+                            </span>
+                        </div>
+                        <span class="font-medium text-gray-700">
+                            {!! wc_price($shipping_total) !!}
+                        </span>
+                    </li>
+                @endif
+
                 @foreach (WC()->cart->get_coupons() as $code => $coupon)
                     <li class="flex items-center justify-between border-b border-gray-100 py-2 text-green-700">
                         <div class="flex items-center">
@@ -147,26 +164,25 @@
 </div>
 
 <script>
-document.addEventListener('DOMContentLoaded', function() {
-    // Selecciona todos los inputs de métodos de envío
-    const shippingInputs = document.querySelectorAll('input.shipping_method');
+    document.addEventListener('DOMContentLoaded', function() {
+        // Selecciona todos los inputs de métodos de envío
+        const shippingInputs = document.querySelectorAll('input.shipping_method');
 
-    shippingInputs.forEach(input => {
-        input.addEventListener('change', function() {
-            // Trigger WooCommerce update_checkout AJAX
-            jQuery(document.body).trigger('update_checkout');
-        });
-    });
-
-    // Para asegurarnos que al cargar nuevos métodos por AJAX, los inputs sigan funcionando
-    jQuery(document.body).on('updated_checkout', function() {
-        const newShippingInputs = document.querySelectorAll('input.shipping_method');
-        newShippingInputs.forEach(input => {
+        shippingInputs.forEach(input => {
             input.addEventListener('change', function() {
+                // Trigger WooCommerce update_checkout AJAX
                 jQuery(document.body).trigger('update_checkout');
             });
         });
-    });
-});
-</script>
 
+        // Para asegurarnos que al cargar nuevos métodos por AJAX, los inputs sigan funcionando
+        jQuery(document.body).on('updated_checkout', function() {
+            const newShippingInputs = document.querySelectorAll('input.shipping_method');
+            newShippingInputs.forEach(input => {
+                input.addEventListener('change', function() {
+                    jQuery(document.body).trigger('update_checkout');
+                });
+            });
+        });
+    });
+</script>
