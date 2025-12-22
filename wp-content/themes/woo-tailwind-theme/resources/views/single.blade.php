@@ -147,7 +147,7 @@
     $dt = new DateTime($auction_end, new DateTimeZone('UTC'));
     $dt->setTimezone(wp_timezone());
 @endphp
-{{ wp_date(get_option('date_format') . ' ' . get_option('time_format'), $dt->getTimestamp()) }}
+{{ date_i18n(get_option('date_format') . ' ' . get_option('time_format'), strtotime($auction_end)) }}
 
                                     </div>
                                 @endif
