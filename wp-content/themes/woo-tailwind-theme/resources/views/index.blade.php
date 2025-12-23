@@ -151,7 +151,7 @@
 
                     </a>
                 </div>
-                <div class="item order-1 flex flex-wrap justify-center gap-3 text-sm sm:order-2 sm:text-base">
+                <div class="item order-1 mr-auto flex flex-wrap justify-center gap-3 text-sm sm:order-2 sm:text-base">
                     <a href="https://geekcollector.com/product-category/tcg/magic-the-gathering/" class="flex items-center text-white transition hover:text-orange-400">
                         <span>MAGIC</span>
                         <svg class="ml-1 h-3 w-3" fill="#ff8000" viewBox="0 0 52 52">
@@ -216,7 +216,7 @@
                         </svg>
                     </a>
                 </div>
-                <div class="item order-2 mt-3 flex items-center justify-center gap-4 text-sm sm:order-3 sm:mt-0 sm:text-base">
+                {{-- <div class="item order-2 mt-3 flex items-center justify-center gap-4 text-sm sm:order-3 sm:mt-0 sm:text-base">
                     <a href="https://geekcollector.com/tournaments/">
                         <div class="flex cursor-pointer items-center gap-1 text-orange-400">
                             <span class="text-white hover:text-orange-400">TORNEOS</span>
@@ -243,7 +243,7 @@
                             </svg>
                         </div>
                     </a>
-                </div>
+                </div> --}}
             </div>
         </div>
 
