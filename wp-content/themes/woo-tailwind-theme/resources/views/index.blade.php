@@ -295,7 +295,7 @@
             @php
                 $args = [
                     'post_type' => 'product',
-                    'posts_per_page' => 15,
+                    'posts_per_page' => 20,
                     'meta_key' => 'total_sales',
                     'orderby' => 'meta_value_num',
                     'order' => 'DESC',
@@ -591,7 +591,7 @@
     </div>
 
     <!-- Script de Swiper -->
-    <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/swiper@12/swiper-bundle.min.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             const swiper = new Swiper('.swiper-container', {
@@ -666,7 +666,7 @@
             });
 
             const swiperExp = new Swiper('.swiper-exp-container', {
-                loop: true,
+                loop: false,
                 slidesPerView: 1,
                 centeredSlides: true,
                 spaceBetween: 20,
