@@ -6,7 +6,9 @@
 
         $product = $product ?: wc_get_product(get_the_ID());
 
-        if (!$product) return;
+        if (!$product) {
+            return;
+        }
 
         $post_thumbnail_id = $product->get_image_id();
         $gallery_ids = $product->get_gallery_image_ids();
@@ -143,11 +145,11 @@
                                 @if ($auction_end)
                                     <div class="text-sm">
                                         <span class="font-semibold">Finaliza:</span>
-@php
-    $dt = new DateTime($auction_end, new DateTimeZone('UTC'));
-    $dt->setTimezone(wp_timezone());
-@endphp
-{{ date_i18n(get_option('date_format') . ' ' . get_option('time_format'), strtotime($auction_end)) }}
+                                        @php
+                                            $dt = new DateTime($auction_end, new DateTimeZone('UTC'));
+                                            $dt->setTimezone(wp_timezone());
+                                        @endphp
+                                        {{ date_i18n(get_option('date_format') . ' ' . get_option('time_format'), strtotime($auction_end)) }}
 
                                     </div>
                                 @endif
@@ -370,9 +372,15 @@
             </div>
 
             {{-- Tabs de detalles del producto --}}
-            <div class="mt-16 overflow-hidden rounded-xl bg-gray-50 shadow-lg transition-all duration-300 hover:shadow-xl">
+            <div class="mt-16 overflow-hidden rounded-xl px-3 py-4 bg-gray-50 shadow-lg transition-all duration-300 hover:shadow-xl">
                 @if (!$is_auction)
                     {!! woocommerce_output_product_data_tabs() !!}
+                @elseif ($is_auction)
+                    @php
+                        $heading = apply_filters('woocommerce_product_description_heading', __('Description', 'woocommerce'));
+                    @endphp
+                    <h2 class="font-semibold text-lg text-gray-900"><?php echo esc_html($heading); ?></h2>
+                    <?php the_content(); ?>
                 @endif
             </div>
 
