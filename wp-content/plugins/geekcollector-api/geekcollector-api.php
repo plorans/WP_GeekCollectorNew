@@ -124,6 +124,58 @@ function gc_login_user($request)
 
 
     // ==============================
+    // Tourname Stats
+    // ==============================
+    global $wpdb;
+
+    $torneosJugados = $wpdb->get_results(
+        $wpdb->prepare(
+            "SELECT COUNT(DISTINCT fecha) as torneos_jugados FROM "
+                . table() .
+                " WHERE geek_tag IN (
+            SELECT geek_tag FROM "
+                . table() . " 
+            WHERE geek_tag = %d
+        )",
+            $user->ID
+        )
+    );
+
+    $torneosVictorias = $wpdb->get_results(
+        $wpdb->prepare(
+            "SELECT SUM(victorias) as victorias FROM "
+                . table() .
+                " WHERE geek_tag IN (
+            SELECT geek_tag FROM "
+                . table() . " 
+            WHERE geek_tag = %d
+        )",
+            $user->ID
+        )
+    );
+
+    $torneosDerrotas = $wpdb->get_results(
+        $wpdb->prepare(
+            "SELECT SUM(derrotas) as derrotas FROM "
+                . table() .
+                " WHERE geek_tag IN (
+            SELECT geek_tag FROM "
+                . table() . " 
+            WHERE geek_tag = %d
+        )",
+            $user->ID
+        )
+    );
+
+    $winRate = ($torneosDerrotas[0]->{'derrotas'} > 0) ? ($torneosVictorias[0]->{'victorias'} / ($torneosVictorias[0]->{'victorias'} + $torneosDerrotas[0]->{'derrotas'})) * 100 : 0;
+
+    $tournament_stats = [
+        'torneos_jugados' => intval($torneosJugados[0]->{'torneos_jugados'} ?? 0),
+        'torneos_ganados' => intval($torneosVictorias[0]->{'victorias'} ?? 0),
+        'win_rate'       => round($winRate, 2)
+    ];
+
+    // ==============================
     // RESPUESTA JSON COMPLETA
     // ==============================
     wp_send_json([
@@ -140,7 +192,8 @@ function gc_login_user($request)
             'credit'        => $credit,
             'avatar'        => $avatar_url,   // <--- AQUI EL AVATAR REAL
             'subscriptions' => $subscriptions,
-            'achievements'  => $achievements
+            'achievements'  => $achievements,
+            'tournament_stats' => $tournament_stats
         ]
     ]);
 }
@@ -295,4 +348,10 @@ function gc_get_user_from_token()
     ]);
 
     return $users[0] ?? false;
+}
+
+function table()
+{
+    global $wpdb;
+    return $wpdb->prefix . 'tcg_tournament_stats';
 }
