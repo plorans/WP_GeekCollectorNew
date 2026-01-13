@@ -32,7 +32,10 @@
 
 # Plugins (general exclusion, keep what you need)
 /wp-content/plugins/*/
-# !/wp-content/plugins/your-custom-plugin/ # Descomenta si tienes plugins personalizados
+
+!/wp-content/plugins/
+!/wp-content/plugins/tcg-stats-importer/
+!/wp-content/plugins/geekcollector-api/
 
 # Environment files
 .env

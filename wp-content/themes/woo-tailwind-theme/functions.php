@@ -603,3 +603,13 @@ remove_filter('woocommerce_shipping_package_name', 'change_shipping_pack_name', 
 
 // ===================================================================================================================================================================
 
+function gc_get_avatar_url($user_id)
+{
+    $avatar_url = get_user_meta($user_id, 'simple_local_avatar', true);
+
+    if (is_string($avatar_url) && !empty($avatar_url)) {
+        return esc_url($avatar_url);
+    }
+
+    return get_template_directory_uri() . '/resources/images/default-avatar.png';
+}
