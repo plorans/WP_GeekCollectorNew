@@ -46,18 +46,16 @@ class TournamentStat
     {
         global $wpdb;
 
-        $selected = Carbon::createFromFormat('Y-m', $mes)->startOfMonth();
+        $semester = tcg_semester_for_month($tcg, $mes);
 
-        $year = $selected->year;
-
-        // If month < September, semester started last year
-        if ($selected->month < 9) {
-            $semesterStart = Carbon::create($year - 1, 9, 1);
-        } else {
-            $semesterStart = Carbon::create($year, 9, 1);
+        if (!$semester) {
+            return [];
         }
 
-        $semesterEnd = $semesterStart->copy()->addMonths(6)->subMonth()->endOfMonth();
+        $start = $semester['start']->toDateString();
+        $end   = $semester['end']->toDateString();
+
+        $table = self::table();
 
 
         return $wpdb->get_results(
@@ -109,13 +107,13 @@ class TournamentStat
                 GROUP BY t.tcg_id
                 ORDER BY puntos DESC, omw DESC
                 ",
-                $semesterStart->format('Y-m'),
+                $start,
                 $tcg,
-                $semesterStart->format('Y-m-d'),
-                $semesterEnd->format('Y-m-d'),
+                $start,
+                $end,
                 $tcg,
-                $semesterStart->format('Y-m-d'),
-                $semesterEnd->format('Y-m-d')
+                $start,
+                $end
             ),
             ARRAY_A
         );

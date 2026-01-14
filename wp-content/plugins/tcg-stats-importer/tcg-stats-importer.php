@@ -4,13 +4,13 @@
  * Plugin Name: TCG Stats Importer
  * Description: Upload and import TCG tournament statistics from XLSX files.
  * Version: 0.1.0
- * Author: GeekDe
+ * Author: GeekDev
  */
 
 use PhpOffice\PhpSpreadsheet\IOFactory;
-use PhpOffice\PhpSpreadsheet\Shared\Date as ExcelDate;
 
 require_once __DIR__ . '/app/Models/TournamentStats.php';
+require_once __DIR__ . '/helpers/Seasons.php';
 
 
 if (!defined('ABSPATH')) {
