@@ -13,9 +13,15 @@ Template Name: Stats
 
         $stats = [];
         $semestre = [];
+        $semestreDate = [];
+
         if ($currentTcg && $currentMonth) {
-            $stats = TournamentStat::torneos($currentTcg, $currentMonth);
-            $semestre = TournamentStat::global($currentTcg, $currentMonth);
+            $semestreDate = tcg_semester_for_month($currentTcg, $currentMonth);
+
+            if ($semestreDate) {
+                $stats = TournamentStat::torneos($currentTcg, $currentMonth);
+                $semestre = TournamentStat::global($currentTcg, $currentMonth);
+            }
         }
 
         $isAdmin = current_user_can('manage_options');
@@ -74,38 +80,43 @@ Template Name: Stats
                         class="hs-submit-on-change relative hidden">
                         <option value="">Choose</option>
                         <option value="onepiece" @selected($currentTcg === 'onepiece')>One Piece</option>
+                        <option value="riftbound" @selected($currentTcg === 'riftbound')>Riftbound</option>
+                        <option value="magic" @selected($currentTcg === 'magic')>Magic The Gathering</option>
                         <option value="dragonball" @selected($currentTcg === 'dragonball')>Dragon Ball</option>
                         <option value="digimon" @selected($currentTcg === 'digimon')>Digimon</option>
                         <option value="pokemon" @selected($currentTcg === 'pokemon')>Pokemon</option>
                         <option value="lorcana" @selected($currentTcg === 'lorcana')>Lorcana</option>
                         <option value="starwars" @selected($currentTcg === 'starwars')>Star Wars</option>
-                        <option value="magic" @selected($currentTcg === 'magic')>Magic The Gathering</option>
-                        <option value="riftbound" @selected($currentTcg === 'riftbound')>Riftbound</option>
                         <option value="gundam" @selected($currentTcg === 'gundam')>Gundam</option>
                     </select>
                 </div>
 
                 @php
-                    $startDate = '2025-09-01';
-                    $start = new DateTime($startDate);
-                    $now = new DateTime('first day of this month');
-
-                    $formatter = new IntlDateFormatter('es_MX', IntlDateFormatter::LONG, IntlDateFormatter::NONE, null, null, 'LLLL yyyy');
-
+                    $startDate = null;
                     $months = [];
-
-                    while ($start <= $now) {
-                        $months[] = [
-                            'label' => ucfirst($formatter->format($start)),
-                            'start' => $start->format('Y-m-01'),
-                            'end' => $start->format('Y-m-t'),
-                            'value' => $start->format('Y-m'),
-                        ];
-
-                        $start->modify('+1 month');
+                    if ($currentTcg) {
+                        $season = DB::table('tcg_seasons')->where('tcg_slug', $currentTcg)->first();
+                        if ($season) {
+                            $startDate = $season->season_start_date;
+                        }
                     }
+                    if ($startDate) {
+                        $start = new DateTime($startDate);
+                        $now = new DateTime('first day of this month');
 
-                    $months = array_reverse($months);
+                        $formatter = new IntlDateFormatter('es_MX', IntlDateFormatter::LONG, IntlDateFormatter::NONE, null, null, 'LLLL yyyy');
+
+                        while ($start <= $now) {
+                            $months[] = [
+                                'label' => ucfirst($formatter->format($start)),
+                                'value' => $start->format('Y-m'),
+                            ];
+
+                            $start->modify('+1 month');
+                        }
+
+                        $months = array_reverse($months);
+                    }
 
                 @endphp
 
@@ -224,7 +235,22 @@ Template Name: Stats
                     </table>
                 </div>
                 <div class="max-h-[450px] overflow-scroll rounded-xl bg-[#252524] px-6 py-4 md:col-span-2">
-                    <div><span class="text-3xl font-semibold text-orange-500">Leaderboard Semestral</span> <br> <span class="text-white">Septiembre 2025 - Febrero 2026</span>
+                    <div>
+                        <span class="text-3xl font-semibold text-orange-500">
+                            Leaderboard Semestral
+                        </span>
+                        <br>
+                        @if ($semestreDate)
+                            <span class="text-white capitalize">
+                                {{ $semestreDate['start']->translatedFormat('F Y') }}
+                                -
+                                {{ $semestreDate['end']->translatedFormat('F Y') }}
+                            </span>
+                        @else
+                            <span class="text-sm text-gray-400">
+                                Selecciona un TCG y un mes
+                            </span>
+                        @endif
                     </div>
 
                     <table class="" id="statsTable-global">

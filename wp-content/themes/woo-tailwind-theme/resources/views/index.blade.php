@@ -212,7 +212,7 @@
                     </a>
                 </div>
                 <div class="item order-2 mt-3 flex items-center justify-center gap-4 text-sm sm:order-3 sm:mt-0 sm:text-base">
-                    <a href=" https://geekcollector.com/leaderboard/">
+                    <a href="{{ site_url('/leaderboard') }}">
                         <div class="flex cursor-pointer items-center gap-1 text-orange-400">
                             <span class="text-white hover:text-orange-400">LEADERBOARD</span>
                             <svg class="h-4 w-4" viewBox="0 0 24 24" fill="#ff8000" xmlns="http://www.w3.org/2000/svg">
