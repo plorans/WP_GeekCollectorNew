@@ -16,19 +16,19 @@
 
             <!-- Membresias -->
             <div class="md:col-span-2 md:col-start-3">
-                <a href="https://geekcollector.com/membresias/">
+                <a href="{{ site_url('membresias/') }}">
                     <h3 class="mb-4 text-lg font-semibold text-orange-400">Membresias</h3>
                 </a>
                 <ul class="space-y-2">
-                    <li><a href="https://geekcollector.com/producto/byte-seeker/" class="text-gray-400 transition-colors duration-200 hover:text-orange-400">Nivel 1: Byte
+                    <li><a href="{{ site_url('producto/byte-seeker/') }}" class="text-gray-400 transition-colors duration-200 hover:text-orange-400">Nivel 1: Byte
                             Seeker</a></li>
-                    <li><a href="https://geekcollector.com/producto/pixel-knight/" class="text-gray-400 transition-colors duration-200 hover:text-orange-400">Nivel 2:
+                    <li><a href="{{ site_url('producto/pixel-knight/') }}" class="text-gray-400 transition-colors duration-200 hover:text-orange-400">Nivel 2:
                             Pixel Knight</a></li>
-                    <li><a href="https://geekcollector.com/producto/realm-sorcerer/" class="text-gray-400 transition-colors duration-200 hover:text-orange-400">Nivel 3:
+                    <li><a href="{{ site_url('producto/realm-sorcerer/') }}" class="text-gray-400 transition-colors duration-200 hover:text-orange-400">Nivel 3:
                             Realm Sorcerer</a></li>
-                    <li><a href="https://geekcollector.com/producto/legendary-guardian/" class="text-gray-400 transition-colors duration-200 hover:text-orange-400">Nivel
+                    <li><a href="{{ site_url('producto/legendary-guardian/') }}" class="text-gray-400 transition-colors duration-200 hover:text-orange-400">Nivel
                             4: Legendary Guardian</a></li>
-                    <li><a href="https://geekcollector.com/producto/cosmic-overlord/" class="text-gray-400 transition-colors duration-200 hover:text-orange-400">Nivel 5:
+                    <li><a href="{{ site_url('producto/cosmic-overlord/') }}" class="text-gray-400 transition-colors duration-200 hover:text-orange-400">Nivel 5:
                             Cosmic Overlord</a></li>
                 </ul>
             </div>

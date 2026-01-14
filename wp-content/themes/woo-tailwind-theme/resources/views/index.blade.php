@@ -152,43 +152,38 @@
                     </a>
                 </div>
                 <div class="item order-1 mr-auto flex flex-wrap justify-center gap-3 text-sm sm:order-2 sm:text-base">
-                    <a href="https://geekcollector.com/product-category/tcg/magic-the-gathering/" class="flex items-center text-white transition hover:text-orange-400">
+                    <a href="{{ site_url('product-category/tcg/magic-the-gathering/') }}" class="flex items-center text-white transition hover:text-orange-400">
                         <span>MAGIC</span>
                         <svg class="ml-1 h-3 w-3" fill="#ff8000" viewBox="0 0 52 52">
                             <path d="M8.3,14h35.4c1,0,1.7,1.3,0.9,2.2L27.3,37.4c-0.6,0.8-1.9,0.8-2.5,0L7.3,16.2C6.6,15.3,7.2,14,8.3,14z" />
                         </svg>
                     </a>
-                    <a href="https://geekcollector.com/product-category/tcg/pokemon/" class="flex items-center text-white transition hover:text-orange-400">POKÉMON
+                    <a href="{{ site_url('product-category/tcg/pokemon/') }}" class="flex items-center text-white transition hover:text-orange-400">POKÉMON
                         <svg class="ml-1 h-3 w-3" fill="#ff8000" viewBox="0 0 52 52">
                             <path d="M8.3,14h35.4c1,0,1.7,1.3,0.9,2.2L27.3,37.4c-0.6,0.8-1.9,0.8-2.5,0L7.3,16.2C6.6,15.3,7.2,14,8.3,14z" />
                         </svg>
                     </a>
-                    <a href="https://geekcollector.com/product-category/tcg/one-piece/" class="flex items-center text-white transition hover:text-orange-400">ONE PIECE
+                    <a href="{{ site_url('product-category/tcg/one-piece/') }}" class="flex items-center text-white transition hover:text-orange-400">ONE PIECE
                         <svg class="ml-1 h-3 w-3" fill="#ff8000" viewBox="0 0 52 52">
                             <path d="M8.3,14h35.4c1,0,1.7,1.3,0.9,2.2L27.3,37.4c-0.6,0.8-1.9,0.8-2.5,0L7.3,16.2C6.6,15.3,7.2,14,8.3,14z" />
                         </svg>
                     </a>
-                    <a href="https://geekcollector.com/product-category/tcg/lorcana/" class="flex items-center text-white transition hover:text-orange-400">DISNEY LORCANA
+                    <a href="{{ site_url('product-category/tcg/lorcana/') }}" class="flex items-center text-white transition hover:text-orange-400">DISNEY LORCANA
                         <svg class="ml-1 h-3 w-3" fill="#ff8000" viewBox="0 0 52 52">
                             <path d="M8.3,14h35.4c1,0,1.7,1.3,0.9,2.2L27.3,37.4c-0.6,0.8-1.9,0.8-2.5,0L7.3,16.2C6.6,15.3,7.2,14,8.3,14z" />
                         </svg>
                     </a>
-                    <a href="https://geekcollector.com/product-category/tcg/star-wars/" class="flex items-center text-white transition hover:text-orange-400">STAR WARS
+                    <a href="{{ site_url('product-category/tcg/star-wars/') }}" class="flex items-center text-white transition hover:text-orange-400">STAR WARS
                         <svg class="ml-1 h-3 w-3" fill="#ff8000" viewBox="0 0 52 52">
                             <path d="M8.3,14h35.4c1,0,1.7,1.3,0.9,2.2L27.3,37.4c-0.6,0.8-1.9,0.8-2.5,0L7.3,16.2C6.6,15.3,7.2,14,8.3,14z" />
                         </svg>
                     </a>
-                    <a href="https://geekcollector.com/product-category/tcg/digimon/" class="flex items-center text-white transition hover:text-orange-400">DIGIMON
+                    <a href="{{ site_url('product-category/tcg/digimon/') }}" class="flex items-center text-white transition hover:text-orange-400">DIGIMON
                         <svg class="ml-1 h-3 w-3" fill="#ff8000" viewBox="0 0 52 52">
                             <path d="M8.3,14h35.4c1,0,1.7,1.3,0.9,2.2L27.3,37.4c-0.6,0.8-1.9,0.8-2.5,0L7.3,16.2C6.6,15.3,7.2,14,8.3,14z" />
                         </svg>
                     </a>
-                    <a href="https://geekcollector.com/product-category/tcg/digimon/" class="flex hidden items-center text-white transition hover:text-orange-400">SUBASTAS
-                        <svg class="ml-1 h-3 w-3" fill="#ff8000" viewBox="0 0 52 52">
-                            <path d="M8.3,14h35.4c1,0,1.7,1.3,0.9,2.2L27.3,37.4c-0.6,0.8-1.9,0.8-2.5,0L7.3,16.2C6.6,15.3,7.2,14,8.3,14z" />
-                        </svg>
-                    </a>
-                    <a href="https://geekcollector.com/subastas/" class="flex items-center text-orange-400 transition">
+                    <a href="{{ site_url('/subastas') }}" class="flex items-center text-orange-400 transition">
                         <span class="text-white hover:text-orange-400">SUBASTAS</span>
                         <svg fill="currentColor" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
                             class="ml-1 h-3 w-3" viewBox="796 796 200 200" enable-background="new 796 796 200 200" xml:space="preserve">
@@ -203,7 +198,7 @@
                         </svg>
                     </a>
 
-                    <a href="https://geekcollector.com/torneos/" class="flex items-center text-orange-400 transition">
+                    <a href="{{ site_url('/torneos') }}" class="flex items-center text-orange-400 transition">
                         <span class="text-white hover:text-orange-400">CALENDARIO</span>
                         <svg class="ml-1 h-4 w-4" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" stroke="currentColor">
                             <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
@@ -217,7 +212,7 @@
                     </a>
                 </div>
                 <div class="item order-2 mt-3 flex items-center justify-center gap-4 text-sm sm:order-3 sm:mt-0 sm:text-base">
-                    <a href="https://geekcollector.com/leaderboard/">
+                    <a href=" https://geekcollector.com/leaderboard/">
                         <div class="flex cursor-pointer items-center gap-1 text-orange-400">
                             <span class="text-white hover:text-orange-400">LEADERBOARD</span>
                             <svg class="h-4 w-4" viewBox="0 0 24 24" fill="#ff8000" xmlns="http://www.w3.org/2000/svg">
@@ -270,15 +265,15 @@
             <div class="flex flex-wrap justify-center gap-4">
                 @php
                     $tcgs = [
-                        ['img' => 'Gundam.png', 'name' => 'GUNDAM', 'url' => 'https://geekcollector.com/product-category/tcg/gundam/'],
-                        ['img' => 'Shadowverse.png', 'name' => 'SHADOWVERSE', 'url' => 'https://geekcollector.com/product-category/tcg/shadowverse/'],
-                        ['img' => 'One Piece.png', 'name' => 'ONE-PIECE', 'url' => 'https://geekcollector.com/product-category/tcg/one-piece/'],
-                        ['img' => 'Lorcana.png', 'name' => 'LORCANA', 'url' => 'https://geekcollector.com/product-category/tcg/lorcana/'],
-                        ['img' => 'STAR WARS.png', 'name' => 'STAR WARS', 'url' => 'https://geekcollector.com/product-category/tcg/star-wars/'],
-                        ['img' => 'Digimon.png', 'name' => 'DIGIMON', 'url' => 'https://geekcollector.com/product-category/tcg/digimon/'],
-                        ['img' => 'Dragon Ball.png', 'name' => 'DRAGON BALL', 'url' => 'https://geekcollector.com/product-category/tcg/dragon-ball/'],
-                        ['img' => 'Pokémon.png', 'name' => 'POKÉMON', 'url' => 'https://geekcollector.com/product-category/tcg/pokemon/'],
-                        ['img' => 'Flesh and Blood.png', 'name' => 'FLESH & BLOOD', 'url' => 'https://geekcollector.com/product-category/tcg/flesh-and-blood/'],
+                        ['img' => 'Gundam.png', 'name' => 'GUNDAM', 'url' => site_url('product-category/tcg/gundam/')],
+                        ['img' => 'Shadowverse.png', 'name' => 'SHADOWVERSE', 'url' => site_url('product-category/tcg/shadowverse/')],
+                        ['img' => 'One Piece.png', 'name' => 'ONE-PIECE', 'url' => site_url('product-category/tcg/one-piece/')],
+                        ['img' => 'Lorcana.png', 'name' => 'LORCANA', 'url' => site_url('product-category/tcg/lorcana/')],
+                        ['img' => 'STAR WARS.png', 'name' => 'STAR WARS', 'url' => site_url('product-category/tcg/star-wars/')],
+                        ['img' => 'Digimon.png', 'name' => 'DIGIMON', 'url' => site_url('product-category/tcg/digimon/')],
+                        ['img' => 'Dragon Ball.png', 'name' => 'DRAGON BALL', 'url' => site_url('product-category/tcg/dragon-ball/')],
+                        ['img' => 'Pokémon.png', 'name' => 'POKÉMON', 'url' => site_url('product-category/tcg/pokemon/')],
+                        ['img' => 'Flesh and Blood.png', 'name' => 'FLESH & BLOOD', 'url' => site_url('product-category/tcg/flesh-and-blood/')],
                     ];
                 @endphp
 
@@ -390,7 +385,7 @@
                 </div>
 
                 <!-- Botón -->
-                <a href="https://geekcollector.com/membresias/">
+                <a href="{{ site_url('membresias/') }}">
                     <div class="mt-5 w-full sm:w-8/12 md:w-7/12 lg:w-6/12">
                         <div
                             class="flex items-center justify-center rounded-full border-2 border-black bg-gradient-to-r from-yellow-200 via-orange-600 to-red-600 px-4 py-2 text-center font-sans text-lg font-extrabold sm:text-xl">
@@ -419,31 +414,31 @@
                         'img' => 'dragonball.png',
                         'tcg' => 'DRAGON-BALL',
                         'name' => 'RIVALS CLASH - [FB06]',
-                        'url' => 'https://geekcollector.com/product-category/tcg/dragon-ball/fb06-rivals-clash/',
+                        'url' => site_url('product-category/tcg/dragon-ball/fb06-rivals-clash/'),
                     ],
                     [
                         'img' => 'lorcana.png',
                         'tcg' => 'LORCANA',
                         'name' => 'REIGN OF JAFAR',
-                        'url' => 'https://geekcollector.com/product-category/tcg/lorcana/reign-of-jafar/',
+                        'url' => site_url('product-category/tcg/lorcana/reign-of-jafar/'),
                     ],
                     [
                         'img' => 'magic_spiderman.jpg',
                         'tcg' => 'MAGIC: THE GATHERING',
                         'name' => 'SPIDERMAN',
-                        'url' => 'https://geekcollector.com/product-category/tcg/magic-the-gathering/spiderman/',
+                        'url' => site_url('product-category/tcg/magic-the-gathering/spiderman/'),
                     ],
                     [
                         'img' => 'onepiece_prb_02.png',
                         'tcg' => 'ONE-PIECE',
                         'name' => 'Premium Booster Vol.2 [PRB-02]',
-                        'url' => 'https://geekcollector.com/product-category/tcg/one-piece/prb02-premium-booster/',
+                        'url' => site_url('product-category/tcg/one-piece/prb02-premium-booster/'),
                     ],
                     [
                         'img' => 'pokemon_megaevo.png',
                         'tcg' => 'POKEMON',
                         'name' => 'Mega Evolution',
-                        'url' => 'https://geekcollector.com/product-category/tcg/pokemon/mega01mega-evolutions/',
+                        'url' => site_url('product-category/tcg/pokemon/mega01mega-evolutions/'),
                     ],
                 ];
             @endphp
@@ -513,7 +508,7 @@
                     <div
                         class="mt-5 inline-block rounded-full bg-gradient-to-r from-yellow-200 via-orange-600 to-red-600 p-[2px] transition-all duration-300 hover:from-yellow-300 hover:via-orange-500 hover:to-red-500">
                         <div class="rounded-full bg-black px-4 py-2 text-sm font-bold text-white md:text-lg">
-                            <a href="https://geekcollector.com/torneos">MÁS INFORMACIÓN</a>
+                            <a href="{{ site_url('torneos') }}">MÁS INFORMACIÓN</a>
                         </div>
                     </div>
                 </a>
@@ -535,14 +530,14 @@
                         'img' => 'M1.png',
                         'titulo' => 'Membresías GeekCollector: ¡Sube de Nivel tu Pasión!',
                         'description' => 'En GeekCollector, nos consideramos como un punto de encuentro para quienes amamos los TCG y la cultura geek',
-                        'url' => 'https://geekcollector.com/blog-1/',
+                        'url' => site_url('blog-1/'),
                     ],
                     [
                         'img' => 'blog3.png',
                         'titulo' => 'Cómo la cultura de los TCG\'s, coleccionables y Funkos han revolucionado al mundo ',
                         'description' => '
                             La cultura geek y coleccionista ha pasado de ser un pasatiempo de nicho a convertirse en un fenómeno global. Lo que antes se limitaba a pequeños grupos de entusiastas que intercambiaban cartas o figuras en convenciones, hoy se ha convertido en una industria inmensa que trasciende generaciones, conecta comunidades y ha transformado la forma en que consumimos el entretenimiento.',
-                        'url' => 'https://geekcollector.com/blog-2/',
+                        'url' => site_url('blog-2/'),
                     ],
                     [
                         'img' => 'blog2.webp',

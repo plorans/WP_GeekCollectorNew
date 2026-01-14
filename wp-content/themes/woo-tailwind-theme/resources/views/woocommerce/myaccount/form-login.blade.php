@@ -132,11 +132,11 @@
                     @php wp_nonce_field('woocommerce-login', 'woocommerce-login-nonce') @endphp
                     @php do_action('woocommerce_login_form_end') @endphp
 
-                    @if (get_option('woocommerce_enable_myaccount_registration') === 'yes')
+                    {{-- @if (get_option('woocommerce_enable_myaccount_registration') === 'yes')
                         <button type="button" onclick="showRegisterForm()" class="switch-button mt-4 w-full rounded-full p-3 text-lg font-bold">
                             ¿No tienes cuenta? <span class="font-extrabold">Regístrate</span>
                         </button>
-                    @endif
+                    @endif --}}
                 </form>
             </div>
 
