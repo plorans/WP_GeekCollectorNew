@@ -588,21 +588,7 @@ function theme_enqueue_scripts()
 add_action('wp_enqueue_scripts', 'theme_enqueue_scripts');
 
 // ===================================================================================================================================================================
-// DOKAN PLUGIN
-
-//Remove dokan related products in product page
-remove_action('woocommerce_product_tabs', 'dokan_set_more_from_seller_tab', 10);
-
-//Remove redirect to dokan dashboard on login
-remove_action('woocommerce_login_redirect', 'dokan_after_login_redirect', 1, 2);
-
-//Remove extra information on shipping methods
-remove_filter('woocommerce_cart_shipping_packages', 'split_shipping_packages');
-remove_action('woocommerce_checkout_create_order_shipping_item', 'add_shipping_pack_meta', 10, 4);
-remove_filter('woocommerce_shipping_package_name', 'change_shipping_pack_name', 10, 3);
-
-// ===================================================================================================================================================================
-
+// Obtener Avatar
 function gc_get_avatar_url($user_id)
 {
     $avatar_url = get_user_meta($user_id, 'simple_local_avatar', true);
@@ -613,3 +599,18 @@ function gc_get_avatar_url($user_id)
 
     return get_template_directory_uri() . '/resources/images/default-avatar.png';
 }
+
+// ===================================================================================================================================================================
+
+
+add_filter('woocommerce_registration_errors', function ($errors) {
+
+    if (empty($_POST['cf-turnstile-response'])) {
+        $errors->add(
+            'turnstile_required',
+            __('Verificación de seguridad requerida.')
+        );
+    }
+
+    return $errors;
+}, 10, 3);

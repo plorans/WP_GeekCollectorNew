@@ -70,31 +70,31 @@ class TournamentStat
                     SUM(t.ganador) AS torneos_ganados,
                     SUM(t.victorias) AS total_victorias,
                     ROUND(AVG(t.omw), 0) AS omw
-                FROM " . self::table() . " t
+                FROM " . $table . " t
 
                 /* Latest username */
                 INNER JOIN (
                     SELECT tcg_id, MAX(fecha) AS last_fecha
-                    FROM " . self::table() . "
+                    FROM " . $table . "
                     WHERE tcg = %s
                     AND fecha BETWEEN %s AND %s
                     GROUP BY tcg_id
                 ) latest_name
                     ON latest_name.tcg_id = t.tcg_id
 
-                INNER JOIN " . self::table() . " u
+                INNER JOIN " . $table . " u
                     ON u.tcg_id = latest_name.tcg_id
                 AND u.fecha = latest_name.last_fecha
 
                 /* Latest non-null geek_tag */
                 LEFT JOIN (
                     SELECT tcg_id, geek_tag
-                    FROM " . self::table() . " gt1
+                    FROM " . $table . " gt1
                     WHERE geek_tag IS NOT NULL
                     AND geek_tag != ''
                     AND fecha = (
                         SELECT MAX(gt2.fecha)
-                        FROM " . self::table() . " gt2
+                        FROM " . $table . " gt2
                         WHERE gt2.tcg_id = gt1.tcg_id
                             AND gt2.geek_tag IS NOT NULL
                             AND gt2.geek_tag != ''

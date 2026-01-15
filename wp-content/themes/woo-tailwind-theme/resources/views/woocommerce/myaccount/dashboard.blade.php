@@ -400,16 +400,10 @@ echo ' -->';
                         // Obtener la URL del avatar de Simple Local Avatars
                         $avatar_url = get_user_meta($user_id, 'simple_local_avatar', true);
                         
-                        // Verifica si la URL del avatar local existe y es válida
-                        if (is_string($avatar_url) && !empty($avatar_url)) {
-                            // Si hay avatar cargado localmente, mostrarlo
-                            echo '<img src="' . esc_url($avatar_url) . '" alt="Avatar" class="w-32 h-32 rounded-full profile-img border-4 border-gradient-to-r from-blue-500 to-purple-600 shadow-lg">';
-                        } else {
-                            // Si no hay avatar cargado localmente, mostrar un avatar por defecto
-                            // Aquí puedes poner una imagen predeterminada, si lo deseas
-                            echo '<img src="' . get_template_directory_uri() . '/images/default-avatar.png" alt="Avatar" class="w-32 h-32 rounded-full profile-img border-4 border-gradient-to-r from-blue-500 to-purple-600 shadow-lg">';
-                        }
                         ?>
+                        <img src="<?= gc_get_avatar_url($user_id) ?>" alt="Avatar"
+                            class="profile-img border-gradient-to-r h-32 w-32 rounded-full border-4 from-blue-500 to-purple-600 shadow-lg" />
+
                     </div>
 
                     <!-- Nombre de usuario y botón para cambiar imagen -->
