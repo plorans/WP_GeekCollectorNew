@@ -145,10 +145,6 @@
                                 @if ($auction_end)
                                     <div class="text-sm">
                                         <span class="font-semibold">Finaliza:</span>
-                                        @php
-                                            $dt = new DateTime($auction_end, new DateTimeZone('UTC'));
-                                            $dt->setTimezone(wp_timezone());
-                                        @endphp
                                         {{ date_i18n(get_option('date_format') . ' ' . get_option('time_format'), strtotime($auction_end)) }}
 
                                     </div>
@@ -159,7 +155,7 @@
                             @if ($auction_end && !$is_finished)
                                 <div class="auction-timer mt-4">
                                     <h4 class="font-semibold text-orange-700">Tiempo restante:</h4>
-                                    <div id="auction-countdown" class="font-mono text-lg font-bold text-orange-800" data-end-time="{{ strtotime($auction_end) }}">
+                                    <div id="auction-countdown" class="font-mono text-lg font-bold text-orange-800" data-end-time="{{ strtotime($auction_end) - get_option('gmt_offset') * HOUR_IN_SECONDS }}">
                                         Cargando...
                                     </div>
                                 </div>
@@ -372,14 +368,14 @@
             </div>
 
             {{-- Tabs de detalles del producto --}}
-            <div class="mt-16 overflow-hidden rounded-xl px-3 py-4 bg-gray-50 shadow-lg transition-all duration-300 hover:shadow-xl">
+            <div class="mt-16 overflow-hidden rounded-xl bg-gray-50 px-3 py-4 shadow-lg transition-all duration-300 hover:shadow-xl">
                 @if (!$is_auction)
                     {!! woocommerce_output_product_data_tabs() !!}
                 @elseif ($is_auction)
                     @php
                         $heading = apply_filters('woocommerce_product_description_heading', __('Description', 'woocommerce'));
                     @endphp
-                    <h2 class="font-semibold text-lg text-gray-900"><?php echo esc_html($heading); ?></h2>
+                    <h2 class="text-lg font-semibold text-gray-900"><?php echo esc_html($heading); ?></h2>
                     <?php the_content(); ?>
                 @endif
             </div>
