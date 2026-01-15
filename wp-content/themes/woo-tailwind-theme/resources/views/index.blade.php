@@ -316,7 +316,7 @@
                         [
                             'taxonomy' => 'product_cat',
                             'field' => 'slug', // puedes usar 'id' si prefieres
-                            'terms' => ['drinks', 'snacks'], // Slugs de las categorías
+                            'terms' => ['drinks', 'snacks','pos-only'], // Slugs de las categorías
                             'operator' => 'NOT IN',
                         ],
                     ],

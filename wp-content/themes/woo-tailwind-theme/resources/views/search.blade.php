@@ -115,11 +115,14 @@
                             Expansiones
                         </h4>
                         <?php
+                        $exclude_terms = gc_get_hidden_product_category_ids();
+                        
                         $product_categories = get_terms([
                             'taxonomy' => 'product_cat',
                             'hide_empty' => true,
                             'parent' => 0,
                             'orderby' => 'name',
+                            'exclude' => array_filter($exclude_terms),
                         ]);
                         $category_count = is_array($product_categories) ? count($product_categories) : 0;
                         ?>

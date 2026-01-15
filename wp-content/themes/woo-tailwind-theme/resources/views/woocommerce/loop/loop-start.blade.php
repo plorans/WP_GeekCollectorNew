@@ -8,15 +8,27 @@
     $min_price = PHP_FLOAT_MAX;
     $current_category = get_queried_object();
 
+    $exclude_terms = gc_get_hidden_product_category_ids();
+
+    $exclude_terms = array_filter($exclude_terms);
+
     $all_category_posts = new WP_Query([
         'post_type' => 'product',
         'posts_per_page' => -1,
         'fields' => 'ids',
         'tax_query' => [
+            'relation' => 'AND',
             [
                 'taxonomy' => 'product_cat',
                 'field' => 'term_id',
-                'terms' => $current_category->term_id,
+                'terms' => [$current_category->term_id],
+                'include_children' => false,
+            ],
+            [
+                'taxonomy' => 'product_cat',
+                'field' => 'term_id',
+                'terms' => $exclude_terms,
+                'operator' => 'NOT IN',
             ],
         ],
         'ignore_price_filter' => true,
@@ -97,12 +109,16 @@
                         Categorías
                     </h4>
                     <?php
+                    $exclude_terms = gc_get_hidden_product_category_ids();
+                    
                     $product_categories = get_terms([
                         'taxonomy' => 'product_cat',
                         'hide_empty' => true,
                         'parent' => 0,
                         'orderby' => 'name',
+                        'exclude' =>$exclude_terms,
                     ]);
+                    
                     $category_count = is_array($product_categories) ? count($product_categories) : 0;
                     ?>
                     <span class="animate-pulse rounded-full bg-orange-500/10 px-2 py-1 text-xs text-orange-400">
@@ -127,7 +143,6 @@
                             echo '</svg>';
                             echo '</div>';
                 
-                            
                             echo '<ul class="subcategories-menu pl-6 pr-3 bg-gray-900/80 transition-all duration-500 overflow-hidden max-h-0">';
                             foreach ($children as $child) {
                                 echo '<li class="py-2 border-b border-gray-800 last:border-0">';

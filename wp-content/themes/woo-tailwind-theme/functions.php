@@ -6,7 +6,7 @@ use Google\Client;
 use Google\Service\Walletobjects;
 use Firebase\JWT\JWT;
 
-require_once ABSPATH . 'vendor/autoload.php'; 
+require_once ABSPATH . 'vendor/autoload.php';
 
 /*
 |--------------------------------------------------------------------------
@@ -476,7 +476,8 @@ function save_stripe_payment_method()
 // Forzar siempre el uso del avatar local de Simple Local Avatars
 add_filter('get_avatar', 'usar_avatar_personalizado', 10, 5);
 
-function usar_avatar_personalizado($avatar, $id_or_email, $size, $default, $alt) {
+function usar_avatar_personalizado($avatar, $id_or_email, $size, $default, $alt)
+{
     // Obtener el ID del usuario
     if (is_numeric($id_or_email)) {
         $user_id = (int) $id_or_email;
@@ -506,16 +507,16 @@ function usar_avatar_personalizado($avatar, $id_or_email, $size, $default, $alt)
 
 
 // Configuración
-add_action('woocommerce_check_cart_items', function() {
+add_action('woocommerce_check_cart_items', function () {
     if (is_admin()) return;
 
     // Configuración
     $categoria_torneos = 'torneos'; // slug de la categoría de torneos
-    $subs_permitidas   = ['Pixel Knight', 'Realm Sorcerer','Cosmic Overlord']; // slugs de las suscripciones
+    $subs_permitidas   = ['Pixel Knight', 'Realm Sorcerer', 'Cosmic Overlord']; // slugs de las suscripciones
 
     $user_id = get_current_user_id();
     if (!$user_id) return;
-  
+
     $has_valid_subscription = false;
 
     // Revisar si el usuario tiene alguna suscripción activa de las permitidas
@@ -601,7 +602,7 @@ function gc_get_avatar_url($user_id)
 }
 
 // ===================================================================================================================================================================
-
+// Captcha Turnstile en el registro de WooCommerce
 
 add_filter('woocommerce_registration_errors', function ($errors) {
 
@@ -614,3 +615,77 @@ add_filter('woocommerce_registration_errors', function ($errors) {
 
     return $errors;
 }, 10, 3);
+
+// ===================================================================================================================================================================
+// Excluir categorias en busquedas (Uncategorized y pos-only)
+add_action('pre_get_posts', function ($query) {
+    if (!is_admin() && $query->is_search() && $query->is_main_query() ) {
+        $exclude_terms = [
+            get_option('default_product_cat'), // Uncategorized
+        ];
+
+        $pos_term = get_term_by('slug', 'pos-only', 'product_cat');
+
+        if ($pos_term && !is_wp_error($pos_term)) {
+            $exclude_terms[] = $pos_term->term_id;
+        }
+
+        $exclude_terms = array_filter($exclude_terms);
+
+        $query->set('tax_query', [
+            [
+                'taxonomy' => 'product_cat',
+                'field'    => 'term_id',
+                'terms'    => $exclude_terms,
+                'operator' => 'NOT IN',
+            ],
+        ]);
+    }
+});
+
+// Obtener IDs de categorias ocultas
+function gc_get_hidden_product_category_ids()
+{
+    $ids = [get_option('default_product_cat')];
+
+    $pos_term = get_term_by('slug', 'pos-only', 'product_cat');
+    if ($pos_term && !is_wp_error($pos_term)) {
+        $ids[] = $pos_term->term_id;
+    }
+
+    return array_filter($ids);
+}
+
+//Eliminar productos dentro de una categoria que pertenezca a cierta categoria (Uncategorized y pos-only)
+add_filter('woocommerce_product_query_tax_query', function ($tax_query, $query) {
+
+    if (is_admin()) {
+        return $tax_query;
+    }
+
+    if (!is_shop() && !is_product_category() && !is_product_tag()) {
+        return $tax_query;
+    }
+
+    $exclude_terms = [
+        get_option('default_product_cat'), // Uncategorized
+    ];
+
+    $pos_term = get_term_by('slug', 'pos-only', 'product_cat');
+    if ($pos_term && !is_wp_error($pos_term)) {
+        $exclude_terms[] = $pos_term->term_id;
+    }
+
+    $exclude_terms = array_filter($exclude_terms);
+
+    if (!empty($exclude_terms)) {
+        $tax_query[] = [
+            'taxonomy' => 'product_cat',
+            'field'    => 'term_id',
+            'terms'    => $exclude_terms,
+            'operator' => 'NOT IN',
+        ];
+    }
+
+    return $tax_query;
+}, 10, 2);
