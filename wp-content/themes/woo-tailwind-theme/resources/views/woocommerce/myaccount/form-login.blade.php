@@ -2,7 +2,7 @@
 @extends('layouts.app')
 
 @section('content')
-    <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+    {{-- <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script> --}}
     <style>
         /* Estilos para autocompletado */
         input:-webkit-autofill,
@@ -174,10 +174,12 @@
                             REGISTRARSE
                         </button>
 
-                        <div class="cf-turnstile" data-sitekey="0x4AAAAAACMifqRVcwd32BaJ"></div>
+                        {{-- <div class="cf-turnstile" data-sitekey="0x4AAAAAACMifqRVcwd32BaJ"></div> --}}
 
                         {{-- Campos ocultos necesarios para WooCommerce --}}
                         @php wp_nonce_field('woocommerce-register', 'woocommerce-register-nonce') @endphp
+                        @php do_action('woocommerce_register_form') @endphp
+                        @php do_action('woocommerce_register_form_end') @endphp
 
                         <button type="button" onclick="showLoginForm()" class="switch-button mt-4 w-full rounded-full p-3 text-lg font-bold">
                             ¿Ya tienes cuenta? <span class="font-extrabold">Inicia sesión</span>
