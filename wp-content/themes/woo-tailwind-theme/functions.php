@@ -604,22 +604,107 @@ function gc_get_avatar_url($user_id)
 // ===================================================================================================================================================================
 // Captcha Turnstile en el registro de WooCommerce
 
-add_filter('woocommerce_registration_errors', function ($errors) {
+// add_filter('woocommerce_registration_errors', function ($errors) {
 
-    if (empty($_POST['cf-turnstile-response'])) {
-        $errors->add(
-            'turnstile_required',
-            __('Verificación de seguridad requerida.')
-        );
-    }
+//     gc_turnstile_log('Registration attempt detected', [
+//         'has_register' => isset($_POST['register']),
+//         'page' => $_SERVER['REQUEST_URI'] ?? 'unknown',
+//     ]);
 
-    return $errors;
-}, 10, 3);
+//     $token = $_POST['cf-turnstile-response'] ?? '';
+
+//     if ($token === '') {
+//         gc_turnstile_log('Registration blocked: missing token');
+//         $errors->add(
+//             'turnstile_required',
+//             __('Verificación de seguridad requerida.')
+//         );
+//         return $errors;
+//     }
+
+//     $validation = gc_validate_turnstile($token);
+
+//     if (!isset($validation['success']) || $validation['success'] !== true) {
+//         gc_turnstile_log('Registration blocked: invalid token', [
+//             'errors' => $validation['error-codes'] ?? [],
+//         ]);
+
+//         $errors->add(
+//             'turnstile_invalid',
+//             __('Falló la verificación de seguridad. Intenta de nuevo.')
+//         );
+
+//         return $errors; 
+//     }
+
+//     gc_turnstile_log('Registration allowed');
+
+
+//     return $errors;
+// }, 10, 3);
+
+// // Función para validar el token de Turnstile
+// function gc_validate_turnstile($token)
+// {
+//     if ($token === '') {
+//         return ['success' => false, 'error-codes' => ['missing-input']];
+//     }
+
+//     gc_turnstile_log('Token present');
+
+//     $secret = '0x4AAAAAACMifjgag9J_XRgQYq29JjXUWCc';
+
+//     $response = wp_remote_post(
+//         'https://challenges.cloudflare.com/turnstile/v0/siteverify',
+//         [
+//             'body' => [
+//                 'secret'   => $secret,
+//                 'response' => $token,
+//             ],
+//             'timeout' => 5,
+//         ]
+//     );
+
+//     if (is_wp_error($response)) {
+//         gc_turnstile_log('Cloudflare request failed', [
+//             'error' => $response->get_error_message(),
+//         ]);
+//         return ['success' => false, 'error-codes' => ['internal-error']];
+//     }
+
+//     $body = json_decode(wp_remote_retrieve_body($response), true);
+
+//     if (!empty($body['success'])) {
+//         gc_turnstile_log('Verification SUCCESS');
+//     } else {
+//         gc_turnstile_log('Verification FAILED', [
+//             'errors' => $body['error-codes'] ?? [],
+//         ]);
+//     }
+
+//     return $body;
+// }
+
+// function gc_turnstile_log($message, $context = [])
+// {
+//     if (!defined('WP_DEBUG') || !WP_DEBUG) {
+//         return;
+//     }
+
+//     $prefix = '[Turnstile] ';
+
+//     if (!empty($context)) {
+//         $message .= ' | ' . wp_json_encode($context);
+//     }
+
+//     error_log($prefix . $message);
+// }
+
 
 // ===================================================================================================================================================================
 // Excluir categorias en busquedas (Uncategorized y pos-only)
 add_action('pre_get_posts', function ($query) {
-    if (!is_admin() && $query->is_search() && $query->is_main_query() ) {
+    if (!is_admin() && $query->is_search() && $query->is_main_query()) {
         $exclude_terms = [
             get_option('default_product_cat'), // Uncategorized
         ];
