@@ -155,8 +155,7 @@
                             @if ($auction_end && !$is_finished)
                                 <div class="auction-timer mt-4">
                                     <h4 class="font-semibold text-orange-700">Tiempo restante:</h4>
-                                    <div id="auction-countdown" class="font-mono text-lg font-bold text-orange-800"
-                                        data-end-time="{{ strtotime($auction_end) - get_option('gmt_offset') * HOUR_IN_SECONDS }}">
+                                    <div id="auction-countdown" class="font-mono text-lg font-bold text-orange-800" data-end-time="{{ strtotime($auction_end) - get_option('gmt_offset') * HOUR_IN_SECONDS }}">
                                         Cargando...
                                     </div>
                                 </div>
