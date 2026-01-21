@@ -4,7 +4,7 @@
 
 <div class="mx-auto py-10 max-w-6xl text-white md:py-30">
     <div class="mb-10 md:mb-30 px-4">
-		<form method="post" class="woocommerce-ResetPassword lost_reset_password">
+		<form method="post" action="" class="woocommerce-ResetPassword lost_reset_password">
 			<div class="text-2xl font-semibold">
 				{{ apply_filters('woocommerce_reset_password_message', esc_html__('Enter a new password below.', 'woocommerce')) }}
 			</div>
@@ -28,6 +28,7 @@
 			</div>
 			<input type="hidden" name="reset_key" value="{{ esc_attr($args['key']) }}" />
 			<input type="hidden" name="reset_login" value="{{ esc_attr($args['login']) }}" />
+			<input type="hidden" name="wc_reset_password" value="true" />
 			<div class="clear"></div>
 			@php
 				do_action('woocommerce_resetpassword_form');
