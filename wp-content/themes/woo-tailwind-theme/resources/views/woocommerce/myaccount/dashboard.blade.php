@@ -612,7 +612,7 @@ echo ' -->';
                         global $wpdb;
 
                         // Tabla de matches (ajusta si tu prefijo no es wp_)
-                        $matches_table = $wpdb->prefix . 'tm_matches';
+                        // $matches_table = $wpdb->prefix . 'tm_matches';
 
                         // Obtener lista de jugadores
                         $players = get_users([
@@ -624,39 +624,12 @@ echo ' -->';
                         foreach ($players as $player) {
                             $user_id = $player->ID;
 
-                            // Partidos ganados
-                            $wins = $wpdb->get_var(
-                                $wpdb->prepare(
-                                    "
-                                        SELECT COUNT(*) 
-                                        FROM $matches_table
-                                        WHERE winner_id = %d
-                                    ",
-                                    $user_id,
-                                ),
-                            );
-
-                            // Partidos jugados totales
-                            $played = $wpdb->get_var(
-                                $wpdb->prepare(
-                                    "
-                                        SELECT COUNT(*) 
-                                        FROM $matches_table
-                                        WHERE one_competitor_id = %d OR two_competitor_id = %d
-                                    ",
-                                    $user_id,
-                                    $user_id,
-                                ),
-                            );
-
-                            $losses = max(0, $played - $wins);
-
                             $leaderboard[] = [
                                 'id' => $user_id,
                                 'name' => $player->display_name,
-                                'wins' => $wins,
-                                'losses' => $losses,
-                                'played' => $played,
+                                'wins' => 0,
+                                'losses' => 0,
+                                'played' => 0,
                                 'avatar' => get_avatar($user_id, 40, '', '', ['class' => 'w-10 h-10 rounded-full']),
                             ];
                         }
