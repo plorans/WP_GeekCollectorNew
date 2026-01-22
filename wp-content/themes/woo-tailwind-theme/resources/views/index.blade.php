@@ -151,7 +151,7 @@
 
                     </a>
                 </div>
-                <div class="item order-1 mr-auto flex flex-wrap justify-center gap-3 text-sm sm:order-2 sm:text-base">
+                <div class="item order-1 ml-auto flex flex-wrap justify-center gap-3 text-sm sm:order-2 sm:text-base">
                     <a href="{{ site_url('product-category/tcg/magic-the-gathering/') }}" class="flex items-center text-white transition hover:text-orange-400">
                         <span>MAGIC</span>
                         <svg class="ml-1 h-3 w-3" fill="#ff8000" viewBox="0 0 52 52">
@@ -211,7 +211,7 @@
                         </svg>
                     </a>
                 </div>
-                <div class="item order-2 mt-3 flex items-center justify-center gap-4 text-sm sm:order-3 sm:mt-0 sm:text-base">
+                <div class="item order-2 mt-3 ml-auto flex items-center justify-center gap-4 text-sm sm:order-3 sm:mt-0 sm:text-base">
                     <a href="{{ site_url('/leaderboard') }}">
                         <div class="flex cursor-pointer items-center gap-1 text-orange-400">
                             <span class="text-white hover:text-orange-400">LEADERBOARD</span>
@@ -223,32 +223,6 @@
                             </svg>
                         </div>
                     </a>
-                    {{-- <a href="https://geekcollector.com/tournaments/">
-                        <div class="flex cursor-pointer items-center gap-1 text-orange-400">
-                            <span class="text-white hover:text-orange-400">TORNEOS</span>
-                            <svg class="h-3 w-4" fill="#ff8000" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
-                                <g>
-                                    <path
-                                        d="M348.375,384.758c-12.811-25.137-32.785-44.594-56.582-54.492v-38.5l0.047-9.133c-0.016,0-0.031,0-0.047,0.004 v-0.242c-11.588,2.262-23.551,3.481-35.791,3.481c-11.369,0-22.476-1.094-33.291-3.055c-0.752-0.152-1.516-0.262-2.264-0.426v0.043 c-0.08-0.016-0.16-0.028-0.24-0.043v47.871c-12.209,5.078-23.393,12.695-33.137,22.293c-0.348,0.34-0.705,0.66-1.049,1.004 c-1.072,1.082-2.1,2.219-3.133,3.348c-0.705,0.77-1.426,1.512-2.115,2.305c-0.61,0.703-1.184,1.442-1.78,2.156 c-1.07,1.289-2.14,2.574-3.168,3.918c-0.088,0.117-0.17,0.238-0.26,0.355c-4.392,5.789-8.406,12.078-11.939,18.875h0.131 c-0.043,0.082-0.09,0.16-0.131,0.238H348.375z" />
-                                    <polygon points="115.046,416 115.046,511.371 115.044,511.758 115.046,511.758 115.046,512 396.957,512 396.957,416" />
-                                    <path
-                                        d="M498.331,29.387c-8.027-9.094-19.447-14.312-31.328-14.312h-47.744V0.27V0.242l0,0V0H92.742v15.074H44.999 c-11.887,0-23.306,5.218-31.336,14.312C3.906,40.442-0.305,56.43,1.775,74.465c0.369,7.922,4.367,49.316,47.211,78.77 c24.732,17.008,48.424,24.629,69.44,27.938c29.008,45.328,79.76,75.398,137.576,75.398c57.805,0,108.558-30.07,137.568-75.398 c21.016-3.305,44.709-10.93,69.445-27.938c42.84-29.453,46.842-70.848,47.211-78.77C512.304,56.43,508.093,40.442,498.331,29.387z" />
-                                </g>
-                            </svg>
-                        </div>
-                    </a>
-
-                    <a href="https://geekcollector.com/ladders">
-                        <div class="flex cursor-pointer items-center gap-1 text-orange-400">
-                            <span class="text-white hover:text-orange-400">LADDER</span>
-                            <svg class="h-4 w-4" viewBox="0 0 24 24" fill="#ff8000" xmlns="http://www.w3.org/2000/svg">
-                                <path
-                                    d="M12.93,6.81a1,1,0,0,1-.47-.12L12,6.45l-.46.24a1,1,0,0,1-1.45-1.05l.09-.52L9.8,4.76a1,1,0,0,1,.56-1.7L10.87,3l.23-.47a1,1,0,0,1,1.8,0l.23.47.51.08a1,1,0,0,1,.56,1.7l-.38.36.09.52a1,1,0,0,1-.39,1A1.09,1.09,0,0,1,12.93,6.81Z" />
-                                <path
-                                    d="M8,16v5a1,1,0,0,1-1,1H3a1,1,0,0,1-1-1V16a1,1,0,0,1,1-1H7A1,1,0,0,1,8,16Zm6-7H10a1,1,0,0,0-1,1V21a1,1,0,0,0,1,1h4a1,1,0,0,0,1-1V10A1,1,0,0,0,14,9Zm7,4H17a1,1,0,0,0-1,1v7a1,1,0,0,0,1,1h4a1,1,0,0,0,1-1V14A1,1,0,0,0,21,13Z" />
-                            </svg>
-                        </div>
-                    </a> --}}
                 </div>
             </div>
         </div>
