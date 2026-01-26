@@ -5,6 +5,7 @@ use PKPass\PKPass;
 use Google\Client;
 use Google\Service\Walletobjects;
 use Firebase\JWT\JWT;
+use WeDevs\Dokan\Ajax;
 
 require_once ABSPATH . 'vendor/autoload.php';
 
@@ -417,6 +418,34 @@ add_action('wp_enqueue_scripts', function () {
     );
 });
 
+// ===================================================================================================================================================================
+// Obtener Stripe Secret Key dependiendo del modo (test/live)
+function gc_get_stripe_secret_key()
+{
+    $settings = get_option('woocommerce_stripe_settings', []);
+
+    $testmode = isset($settings['testmode']) && $settings['testmode'] === 'yes';
+
+    if ($testmode) {
+        return $settings['test_secret_key'] ?? '';
+    }
+
+    return $settings['secret_key'] ?? '';
+}
+
+function gc_get_stripe_publishable_key()
+{
+    $settings = get_option('woocommerce_stripe_settings', []);
+
+    $testmode = isset($settings['testmode']) && $settings['testmode'] === 'yes';
+
+    if ($testmode) {
+        return $settings['test_publishable_key'] ?? '';
+    }
+
+    return $settings['publishable_key'] ?? '';
+}
+
 
 // ===========================================================================================================================================================
 // Ajax para guardar método de pago de Stripe
@@ -442,8 +471,7 @@ function save_stripe_payment_method()
     }
 
     // Obtener la API key desde WooCommerce Stripe settings
-    $stripe_settings = get_option('woocommerce_stripe_settings', []);
-    $secret_key = isset($stripe_settings['secret_key']) ? $stripe_settings['secret_key'] : '';
+    $secret_key = gc_get_stripe_secret_key();
 
     if (empty($secret_key)) {
         wp_send_json_error(['message' => 'Stripe Secret Key no configurada']);
@@ -471,6 +499,44 @@ function save_stripe_payment_method()
         wp_send_json_error(['message' => $e->getMessage()]);
     }
 }
+
+// ===================================================================================================================================================================
+// Ajax para eliminar método de pago de Stripe
+add_action('wp_ajax_remove_stripe_payment_method', 'remove_stripe_payment_method');
+
+function remove_stripe_payment_method()
+{
+    if (!is_user_logged_in()) {
+        wp_send_json_error(['message' => 'No autenticado']);
+    }
+
+    $payment_method_id = sanitize_text_field($_POST['payment_method_id'] ?? '');
+    if (!$payment_method_id) {
+        wp_send_json_error(['message' => 'ID inválido']);
+    }
+
+    $stripe_customer_id = get_user_meta(get_current_user_id(), 'gc__stripe_customer_id', true);
+    if (!$stripe_customer_id) {
+        wp_send_json_error(['message' => 'Cliente Stripe no encontrado']);
+    }
+
+    try {
+        $stripe = new \Stripe\StripeClient(gc_get_stripe_secret_key());
+
+        // (Optional but recommended) verify ownership
+        $pm = $stripe->paymentMethods->retrieve($payment_method_id);
+        if ($pm->customer !== $stripe_customer_id) {
+            wp_send_json_error(['message' => 'Este método no pertenece al usuario']);
+        }
+
+        $stripe->paymentMethods->detach($payment_method_id);
+
+        wp_send_json_success();
+    } catch (Exception $e) {
+        wp_send_json_error(['message' => $e->getMessage()]);
+    }
+}
+
 
 // ===================================================================================================================================================================
 // Forzar siempre el uso del avatar local de Simple Local Avatars

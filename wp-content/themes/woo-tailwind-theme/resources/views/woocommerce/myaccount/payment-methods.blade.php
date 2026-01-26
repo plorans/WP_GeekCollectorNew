@@ -3,7 +3,7 @@
 
     $user_id = get_current_user_id();
     $stripe_customer_id = get_user_meta($user_id, 'gc__stripe_customer_id', true);
-    $stripe = new StripeClient(get_option('woocommerce_stripe_settings')['secret_key']);
+    $stripe = new StripeClient(gc_get_stripe_secret_key());
 
     // Obtener métodos guardados
     $saved_methods = [];
@@ -67,6 +67,7 @@
                         <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500">Vence</th>
                         <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500">Predeterminada</th>
                         <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500">Acciones</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500"></th>
                     </tr>
                 </thead>
                 <tbody class="divide-y divide-gray-200 bg-white">
@@ -108,8 +109,8 @@
                             </td>
                             <td class="whitespace-nowrap px-6 py-4">
                                 @if ($method->id === $default_payment_method_id)
-                                    <span class="inline-flex rounded-full bg-green-100 px-2 text-xs font-semibold leading-5 text-green-800">
-                                        ✅ Predeterminada
+                                    <span class="inline-flex rounded-full bg-green-200 px-2 text-xs font-semibold leading-5 text-green-800">
+                                        Predeterminada
                                     </span>
                                 @else
                                     <span class="inline-flex rounded-full bg-gray-100 px-2 text-xs font-semibold leading-5 text-gray-800">
@@ -130,6 +131,13 @@
                                 @else
                                     <span class="text-gray-400">—</span>
                                 @endif
+                            </td>
+                            <td class="whitespace-nowrap px-6 py-4">
+                                <button class="remove-card rounded-md px-3 py-1 text-sm font-medium text-red-800 transition-colors duration-200 hover:bg-indigo-100"
+                                    data-payment-method-id="<?= esc_attr($method->id) ?>">
+                                    Eliminar
+                                </button>
+
                             </td>
                         </tr>
                     @endforeach
@@ -222,7 +230,24 @@
             text-align: left;
         }
     }
+
+    .swal2-popup {
+        background: #111827 !important;
+        color: #f9fafb !important;
+    }
+
+    .swal2-confirm {
+        background: linear-gradient(135deg, #fb923c, #f97316) !important;
+        color: #111827 !important;
+        font-weight: 600;
+    }
+
+    .swal2-cancel {
+        background: #1f2937 !important;
+        color: #e5e7eb !important;
+    }
 </style>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 <script>
     document.addEventListener('DOMContentLoaded', function() {
@@ -248,6 +273,47 @@
             button.addEventListener('click', function(e) {
                 this.innerHTML = '<i class="fa-spinner fa-solid animate-spin mr-1"></i> Procesando...';
                 this.classList.add('opacity-75', 'cursor-not-allowed');
+            });
+        });
+    });
+
+    document.querySelectorAll('.remove-card').forEach(btn => {
+        btn.addEventListener('click', () => {
+            Swal.fire({
+                title: 'Eliminar método de pago',
+                text: '¿Seguro que deseas eliminar este método de pago? Esta acción no se puede deshacer.',
+                showCancelButton: true,
+                confirmButtonText: 'Eliminar',
+                cancelButtonText: 'Cancelar',
+                reverseButtons: true
+            }).then(result => {
+                if (!result.isConfirmed) return;
+
+                fetch('<?php echo admin_url('admin-ajax.php'); ?>', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/x-www-form-urlencoded'
+                        },
+                        body: new URLSearchParams({
+                            action: 'remove_stripe_payment_method',
+                            payment_method_id: btn.dataset.paymentMethodId
+                        })
+                    })
+                    .then(res => res.json())
+                    .then(data => {
+                        if (data.success) {
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'Eliminado',
+                                text: 'El método de pago fue eliminado correctamente.',
+                                timer: 1500,
+                                showConfirmButton: false
+                            });
+                            setTimeout(() => location.reload(), 1500);
+                        } else {
+                            Swal.fire('Error', data.message, 'error');
+                        }
+                    });
             });
         });
     });

@@ -360,7 +360,7 @@ echo ' -->';
                     <p class="text-sm opacity-70">Membresía Activa</p>
                     <?php else : ?>
                     <h1 class="text-center text-3xl font-bold text-gray-400">Sin membresía activa</h1>
-                    <a href="https://geekcollector.mx/membresias/"
+                    <a href="{{ site_url('membresias/') }}"
                         class="mt-2 inline-block transform rounded-lg bg-gradient-to-r from-blue-500 to-purple-600 px-6 py-2 font-semibold text-white transition-all duration-300 hover:scale-105 hover:from-blue-600 hover:to-purple-700">
                         <i class="fas fa-crown mr-2"></i>Únete ahora
                     </a>
