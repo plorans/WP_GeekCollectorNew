@@ -32,173 +32,161 @@
             z-index: 1;
         }
 
-        .hero-banner img {
-            object-position: center 30%;
-            transition: transform 0.5s ease;
-        }
-
-        .hero-banner:hover img {
-            transform: scale(1.05);
-        }
-
         /* Calendario mejorado - RESPONSIVE FIXED */
-        .calendar-container {
-            position: relative;
-            background: #1a1a1a;
-            border-radius: 12px;
-            overflow: hidden;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-            margin-bottom: 3rem;
-            transition: all 0.3s ease;
-        }
-
-        .calendar-container:hover {
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
-        }
-
-        .fc {
-            --fc-border-color: #333;
-            --fc-page-bg-color: #1a1a1a;
-            --fc-neutral-bg-color: #1a1a1a;
-            --fc-list-event-hover-bg-color: #2a2a2a;
-        }
-
-        .fc .fc-toolbar-title {
-            font-size: 1.5rem;
-            font-weight: 600;
-            color: white;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        .fc .fc-col-header-cell-cushion {
-            color: #f97316;
-            font-weight: 500;
-            padding: 8px 4px;
-            text-decoration: none;
-        }
-
-        .fc .fc-daygrid-day-number {
-            color: white;
-            font-weight: 400;
-            padding: 8px;
-            text-decoration: none;
-        }
-
-        .fc .fc-daygrid-day.fc-day-today {
-            background-color: rgba(249, 115, 22, 0.15);
-        }
-
-        .fc .fc-daygrid-day-frame {
-            transition: background-color 0.2s ease;
-        }
-
-        .fc .fc-daygrid-day-frame:hover {
-            background-color: rgba(255, 255, 255, 0.05);
-        }
-
-        /* Eventos del calendario mejorados - RESPONSIVE FIXED */
+        /* Event card */
         .fc-event {
-            border: none;
             background: transparent;
-            border-radius: 8px;
-            transition: all 0.3s ease;
-        }
-
-        .fc-event:hover {
-            transform: scale(1.05);
-            z-index: 10;
-        }
-
-        .event-tooltip {
-            position: absolute;
-            background: rgba(0, 0, 0, 0.85);
-            color: white;
-            padding: 8px 12px;
-            border-radius: 6px;
-            font-size: 0.875rem;
-            z-index: 100;
-            pointer-events: none;
-            opacity: 0;
-            transition: opacity 0.3s ease;
-            max-width: 200px;
-            text-align: center;
-        }
-
-        .fc-event:hover .event-tooltip {
-            opacity: 1;
-            bottom: 100%;
-            margin-bottom: 5px;
-        }
-
-        /* FIX PARA ICONOS RESPONSIVOS */
-        .fc-event-container {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            width: 100%;
-            height: 100%;
+            border: none;
         }
 
         .fc-daygrid-event {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .fc-event-main {
-            width: 100%;
-            display: flex;
-            justify-content: center;
-        }
-
-        .event-icon-container {
-            width: 100%;
-            display: flex;
-            justify-content: center;
             padding: 2px;
         }
 
-        .event-icon {
+        .fc-daygrid-day-events {
+            margin-top: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        /* Calendar container */
+        .calendar-container {
+            background: #1a1a1a;
+        }
+
+        /* FullCalendar base */
+        .fc {
+            --fc-page-bg-color: #1a1a1a;
+            --fc-neutral-bg-color: #1a1a1a;
+            --fc-border-color: #2a2a2a;
+        }
+
+        /* Grid background */
+        .fc .fc-scrollgrid,
+        .fc .fc-daygrid {
+            background-color: #1a1a1a;
+        }
+
+        /* Day cells */
+        .fc .fc-daygrid-day {
+            background-color: #1a1a1a;
+        }
+
+        /* Cell borders (lighter gray) */
+        .fc-theme-standard td,
+        .fc-theme-standard th {
+            border-color: #2a2a2a;
+        }
+
+        /* Card */
+        .fc-event-container {
+            background: linear-gradient(180deg, #1f1f1f, #161616);
+            border: 1px solid #2a2a2a;
+            border-radius: 10px;
+            padding: 6px 10px;
+            width: 100%;
             max-width: 100%;
-            height: auto;
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            transition: all 0.25s ease;
+            position: relative;
+        }
+
+        /* Accent bar */
+        .fc-event-container::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 3px;
+            width: 100%;
+            background: #f97316;
+            border-radius: 10px 10px 0 0;
+        }
+
+        /* Hover */
+        .fc-event-container:hover {
+            transform: translateY(-1px);
+            /* was -2px + scale */
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.35);
+            border-color: #f97316;
+        }
+
+        /* Icon */
+        .event-icon {
+            width: 40px;
+            height: 40px;
             object-fit: contain;
-            border-radius: 4px;
+            flex-shrink: 0;
         }
 
-        /* Ajustes específicos para diferentes tamaños de pantalla */
-        @media (max-width: 768px) {
-            .event-icon-container {
-                max-width: 40px;
-                max-height: 40px;
-            }
-
-            .fc .fc-toolbar-title {
-                font-size: 1.2rem;
-            }
-
-            .fc .fc-col-header-cell-cushion {
-                font-size: 0.8rem;
-                padding: 4px 2px;
-            }
-
-            .fc .fc-daygrid-day-number {
-                font-size: 0.8rem;
-                padding: 4px;
-            }
+        /* Column header background */
+        .fc .fc-col-header-cell {
+            background-color: #1a1a1a;
+            border-color: rgba(255, 255, 255, 0.08);
         }
 
-        @media (min-width: 769px) and (max-width: 1024px) {
-            .event-icon-container {
-                max-width: 50px;
-                max-height: 50px;
-            }
+        /* Header text */
+        .fc .fc-col-header-cell-cushion {
+            color: #f97316;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            padding: 8px 4px;
+            background: transparent;
         }
 
-        @media (min-width: 1025px) {
-            .event-icon-container {
-                max-width: 60px;
-                max-height: 60px;
+        .fc-button {
+            background-color: #f97316 !important;
+            color: #fff;
+        }
+
+        /* Text column */
+        .event-text {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+            min-width: 0;
+            flex: 1 1 auto;
+        }
+
+        /* Text */
+        .event-title {
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: #e5e5e5;
+            line-height: 1.2;
+            white-space: normal;
+            overflow: hidden;
+            display: -webkit-box;
+            -webkit-box-orient: vertical;
+            -webkit-line-clamp: 2;
+        }
+
+        /* Time */
+        .event-time {
+            font-size: 0.6rem;
+            color: #9ca3af;
+        }
+
+        .event-type {
+            font-size: 0.5rem;
+            color: #9ca3af;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+        }
+
+        /* Reduce day cell height */
+        .fc-daygrid-day-frame {
+            min-height: 90px;
+            padding: 6px;
+        }
+
+        @media (min-width: 1024px) {
+            .fc-daygrid-day-frame {
+                min-height: 110px;
             }
         }
 
@@ -372,7 +360,7 @@
     <!-- Hero Section Mejorada -->
     <div class="-mt-2 overflow-hidden bg-black">
         <div class="hero-banner relative my-2 mb-10 aspect-[3/3] w-full overflow-hidden sm:aspect-[16/7] md:aspect-[16/6]">
-            <img src="{{ asset('/resources/images/torneos3.png') }}" class="absolute h-full w-full object-cover object-center" alt="Banner principal" />
+            <img src="{{ asset('/resources/images/torneos4.png') }}" class="absolute h-full w-full object-cover object-center" alt="Banner principal" />
             <div class="absolute bottom-0 left-0 z-10 w-full p-6">
                 <h1 class="mb-2 text-4xl font-bold text-white">Torneos</h1>
                 <p class="text-xl text-orange-200">Compite y demuestra tu habilidad en nuestros eventos</p>
@@ -383,55 +371,54 @@
     <div class="container mx-auto px-2 py-4 sm:px-4">
 
         <!-- Calendario Mejorado -->
-        <div class="calendar-container animate-fade-in">
+        <div class="calendar-container animate-fade-in mb-10">
             <div id="calendar" class="p-4 capitalize text-white md:p-6">
             </div>
         </div>
 
+        @php
+
+        @endphp
+
         <!-- Rankings Mejorados -->
-        <div class="mb-10 grid grid-cols-1 gap-6 px-2 md:px-6 lg:grid-cols-3">
+        {{-- <div class="mb-10 grid grid-cols-1 gap-6 px-2 md:px-6 lg:grid-cols-3">
             <div class="col-span-1 px-4 py-2 md:col-span-1">
                 <div class="mb-4 flex items-center text-2xl font-semibold text-orange-500">
                     <i class="fas fa-trophy mr-2 text-yellow-500"></i> Leaderboard
                 </div>
                 @php
-                    $players = [
-                        ['name' => 'Emma Johnson', 'nivel' => '0', 'pts' => '0'],
-                        ['name' => 'Liam Williams', 'nivel' => '0', 'pts' => '0'],
-                        ['name' => 'Olivia Brown', 'nivel' => '0', 'pts' => '0'],
-                        ['name' => 'Noah Jones', 'nivel' => '0', 'pts' => '0'],
-                        ['name' => 'Ava Garcia', 'nivel' => '0', 'pts' => '0'],
-                        ['name' => 'William Miller', 'nivel' => '0', 'pts' => '0'],
-                        ['name' => 'Sophia Davis', 'nivel' => '0', 'pts' => '0'],
-                        ['name' => 'James Rodriguez', 'nivel' => '0', 'pts' => '0'],
-                        ['name' => 'Isabella Martinez', 'nivel' => '0', 'pts' => '0'],
-                        ['name' => 'Oliver Hernandez', 'nivel' => '0', 'pts' => '0'],
-                    ];
-                    $i = 1;
+                    global $wpdb;
+
+                    $players = $wpdb->get_results("
+                                    SELECT
+                                        MAX(NULLIF(geek_tag, '')) AS geek_tag,
+                                        SUM(puntos) AS puntos
+                                    FROM gc_tcg_tournament_stats 
+                                    GROUP BY COALESCE(NULLIF(geek_tag, ''), tcg_id)
+                                    ORDER BY puntos DESC 
+                                    LIMIT 10; 
+                              ");
+                    $i = 0;
                 @endphp
                 <div class="custom-scrollbar max-h-[405px] overflow-y-auto">
                     @foreach ($players as $player)
-                        @php
-                            $user_id = 2;
-                        @endphp
+                    @php
+                         $user_id = $player->geek_tag ?: '';
+                    @endphp
                         <div class="animate-fade-in delay-{{ ($i - 1) * 100 }} px-2 py-2">
                             <div class="leaderboard-item flex items-center justify-between rounded-lg p-3">
                                 <div class="flex items-center gap-3">
                                     {!! get_avatar($user_id, 40, '', '', ['class' => 'w-10 h-10 rounded-full']) !!}
                                     <div>
-                                        <p class="font-semibold text-white">{{ $player['name'] }}</p>
-                                        <p class="text-xs text-gray-400">Nivel {{ $player['nivel'] }} </p>
+                                        <p class="font-semibold text-white">{{ get_user_by('ID', $user_id)->display_name ?? 'Usuario desconocido' }}</p>
                                     </div>
                                 </div>
                                 <div class="text-right">
-                                    <p class="text-sm text-green-400">#{{ $i }}</p>
-                                    <p class="text-xs text-gray-400"> {{ $player['pts'] }} pts</p>
+                                    <p class="text-sm text-green-400">#{{ ++$i }}</p>
+                                    <p class="text-xs text-gray-400"> {{ $player->puntos }} pts</p>
                                 </div>
                             </div>
                         </div>
-                        @php
-                            $i++;
-                        @endphp
                     @endforeach
                 </div>
             </div>
@@ -483,8 +470,7 @@
 
                         global $wpdb;
                         $ladder_id = 1;
-                        $ladders_entries = $wpdb->prefix . 'trn_ladders_entries';
-                        $tournaments_entries = $wpdb->prefix . 'trn_tournaments_entries';
+                        $tournaments_table = $wpdb->prefix . 'tcg_tournament_stats';
 
                         foreach ($tcgs as $tcg) {
                             $ladder_id = current($tcg);
@@ -494,7 +480,7 @@
                                 $wpdb->prepare(
                                     "
                                     SELECT competitor_id, points, wins
-                                    FROM $ladders_entries
+                                    FROM $tournaments_table
                                     WHERE ladder_id = %d
                                     ORDER BY points DESC
                                     LIMIT 3
@@ -507,7 +493,7 @@
                                 $wpdb->prepare(
                                     "
                                     SELECT competitor_id
-                                    FROM $ladders_entries
+                                    FROM $tournaments_table
                                     WHERE ladder_id = %d
                                     ORDER BY points DESC
                                     ",
@@ -592,7 +578,7 @@
                     @endforeach
                 </div>
             </div>
-        </div>
+        </div> --}}
 
         <!-- Mapa Mejorado -->
         <section class="animate-fade-in mt-10 flex flex-col items-start justify-center overflow-hidden rounded-xl bg-black text-white shadow-xl lg:flex-row">
@@ -645,16 +631,18 @@
         document.addEventListener('DOMContentLoaded', async function() {
             var calendarEl = document.getElementById('calendar');
 
-            const response = await fetch('/wp-content/themes/woo-tailwind-theme/public/events/calendar.json');
+            const response = await fetch('/wp-json/gc/v1/tournaments');
+
             const events = await response.json();
 
             var calendar = new FullCalendar.Calendar(calendarEl, {
                 initialView: 'dayGridMonth',
+                height: 'auto',
                 locale: 'es',
                 headerToolbar: {
                     left: '',
                     center: 'title',
-                    right: 'prev,next today'
+                    right: 'prev,next'
                 },
                 titleFormat: {
                     year: 'numeric',
@@ -667,32 +655,52 @@
                 },
 
                 eventContent: function(arg) {
-                    const event = arg.event;
-                    const imageurl = event.extendedProps.imageurl;
-                    const title = event.title;
-                    const tipo = event.extendedProps.tipo;
-                    console.log(tipo);
+                    const {
+                        imageurl
+                    } = arg.event.extendedProps;
+                    const title = arg.event.title;
+
+                    const startDate = arg.event.start;
+                    const time = startDate ?
+                        startDate.toLocaleTimeString('es-MX', {
+                            hour: '2-digit',
+                            minute: '2-digit'
+                        }) :
+                        '';
+
                     const container = document.createElement('div');
                     container.className = 'fc-event-container';
 
                     if (imageurl) {
-                        const iconContainer = document.createElement('div');
-                        iconContainer.className = 'event-icon-container';
-
                         const img = document.createElement('img');
                         img.src = imageurl;
                         img.className = 'event-icon';
                         img.alt = title;
-                        img.title = title;
-
-                        iconContainer.appendChild(img);
-                        container.appendChild(iconContainer);
+                        container.appendChild(img);
                     }
+
+                    const text = document.createElement('div');
+                    text.className = 'event-text';
+
+                    const titleEl = document.createElement('div');
+                    titleEl.className = 'event-title';
+                    titleEl.textContent = title;
+
+                    const timeEl = document.createElement('div');
+                    timeEl.className = 'event-time';
+                    timeEl.textContent = time;
+
+                    text.appendChild(titleEl);
+                    text.appendChild(timeEl);
+                    container.appendChild(text);
 
                     return {
                         domNodes: [container]
                     };
                 },
+
+
+
 
                 eventDidMount: function(arg) {
                     // Añadir tooltip con información del evento
