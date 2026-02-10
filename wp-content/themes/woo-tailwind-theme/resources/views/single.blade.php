@@ -154,8 +154,13 @@
                             {{-- Temporizador de la subasta --}}
                             @if ($auction_end && !$is_finished)
                                 <div class="auction-timer mt-4">
+                                    @php
+                                        $tz = wp_timezone(); // WordPress site timezone (America/Monterrey)
+                                        $dt = new DateTime($auction_end, $tz);
+                                        $timestamp = $dt->getTimestamp();
+                                    @endphp
                                     <h4 class="font-semibold text-orange-700">Tiempo restante:</h4>
-                                    <div id="auction-countdown" class="font-mono text-lg font-bold text-orange-800" data-end-time="{{ strtotime($auction_end) - get_option('gmt_offset') * HOUR_IN_SECONDS }}">
+                                    <div id="auction-countdown" class="font-mono text-lg font-bold text-orange-800" data-end-time="{{ $timestamp }}">
                                         Cargando...
                                     </div>
                                 </div>
@@ -183,7 +188,7 @@
                         @if (!$is_finished && !$is_closed && $is_started)
                             <div class="bid-form mt-6 rounded-lg border border-gray-200 bg-gray-50 p-4">
                                 <h4 class="mb-1 text-lg font-semibold">Realizar una puja</h4>
-                                <p class=" mb-2 text-xs font-semibold text-amber-700">Para poder registrar una puja, primero debes agregar un método de pago.</p>
+                                <p class="mb-2 text-xs font-semibold text-amber-700">Para poder registrar una puja, primero debes agregar un método de pago.</p>
 
                                 @if (is_user_logged_in())
                                     {{-- FORMULARIO CORREGIDO - Usando la estructura exacta del plugin --}}
