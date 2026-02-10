@@ -227,31 +227,12 @@ echo ' -->';
     </head>
 
     @php
-        $user_id = get_current_user_id();
-        $player = trn_get_player($user_id);
-        $player = trn_the_player($player);
-
-        // Usar el shortcode para el récord y parsear los datos si quieres
-        $record = do_shortcode('[trn-career-record competitor_type="players" competitor_id="' . intval($player->user_id) . '"]');
-
-        // Inicializamos variables
-        $ladder_id = 1; //Ladder que queramos mostrar
-        $ranking_actual = 0;
+        $ranking_actual = 1;
         $puntos_totales = 0;
         $torneos_jugados = 0;
         $victorias_totales = 0;
         $top3 = 0;
         $omw = 0;
-
-        // Extraer datos del string $record con regex (si viene en formato "3 - 1 - 0 (3 - 1 - 0 in singles)")
-        if (preg_match('/(\d+)\s*-\s*(\d+)\s*-\s*(\d+)/', $record, $matches)) {
-            $victorias_totales = intval($matches[1]);
-            $top3 = intval($matches[2]);
-            $torneos_jugados = intval($matches[3]);
-        }
-
-        // Para ranking, puntos, K/D: solo si el plugin tiene shortcodes o meta fields, por ahora dejamos 0
-
     @endphp
 
     @php
@@ -259,27 +240,20 @@ echo ' -->';
         $user_id = get_current_user_id();
 
         // Tabla de matches
-        $matches_table = $wpdb->prefix . 'trn_matches';
-        $tournaments_table = $wpdb->prefix . 'trn_tournaments';
-        $ladders_entries = $wpdb->prefix . 'trn_ladders_entries';
-        $tournaments_entries = $wpdb->prefix . 'trn_tournaments_entries';
+        $tournaments_table = $wpdb->prefix . 'tcg_tournament_stats';
 
         //Estrellas Torneos
-        $estrellas = $wpdb->get_results(
-            $wpdb->prepare(
-                "
-                    SELECT $matches_table.one_competitor_id, $matches_table.two_competitor_id
-                    FROM $matches_table
-                    INNER JOIN (
-                    SELECT competition_id, MAX(match_id) as max_match_id
-                    FROM $matches_table
-                    WHERE competition_type LIKE '%tournaments%'
-                    AND two_competitor_id = 0
-                    GROUP BY competition_id
-                    ) latest ON $matches_table.competition_id = latest.competition_id AND $matches_table.match_id = latest.max_match_id
-                    INNER JOIN $tournaments_table ON $matches_table.competition_id = $tournaments_table.tournament_id
-                    WHERE $tournaments_table.status = 'complete'
+        $estrellas = intval(
+            $wpdb->get_var(
+                $wpdb->prepare(
+                    "
+                SELECT COUNT($tournaments_table.geek_tag)
+                FROM $tournaments_table
+                WHERE $tournaments_table.ranking = 1
+                AND $tournaments_table.geek_tag = %d
                 ",
+                    $user_id,
+                ),
             ),
         );
 
@@ -288,62 +262,80 @@ echo ' -->';
             $wpdb->get_var(
                 $wpdb->prepare(
                     "
-                        SELECT COUNT(DISTINCT tournament_id)
-                        FROM $tournaments_entries
-                        WHERE competitor_id = %d
+                        SELECT COUNT(*)
+                        FROM $tournaments_table
+                        WHERE geek_tag = %d
                     ",
                     $user_id,
                 ),
             ),
         );
 
-        // Ranking actual (si el jugador está en alguna ladder activa)
-        $rankings = $wpdb->get_col(
-            $wpdb->prepare(
-                "
-                    SELECT competitor_id
-                    FROM $ladders_entries
-                    WHERE ladder_id = %d
-                    ORDER BY points DESC
-                ",
-                $ladder_id,
-            ),
-        );
-
-        $ranking_actual = array_search($user_id, $rankings) + 1;
-
-        // Puntos totales (si existe columna points en ladders_entries)
-        $puntos_totales =
+        // Ranking actual (de acuerdo a puntos en todos los tcg)
+        $ranking_actual += intval(
             $wpdb->get_var(
                 $wpdb->prepare(
                     "
-                        SELECT SUM(points)
-                        FROM $ladders_entries
-                        WHERE competitor_id = %d
+                    SELECT COUNT(*)
+                    FROM (
+                        SELECT
+                            COALESCE(NULLIF(geek_tag, ''), tcg_id) AS player_key,
+                            SUM(puntos) AS total_puntos
+                        FROM {$tournaments_table}
+                        GROUP BY player_key
+                    ) totals
+                    WHERE totals.total_puntos > (
+                        SELECT SUM(puntos)
+                        FROM {$tournaments_table}
+                        WHERE COALESCE(NULLIF(geek_tag, ''), tcg_id) = %d
+                    );
+
                     ",
                     $user_id,
                 ),
+            ),
+        );
+
+        // Puntos totales (si existe columna points en ladders_entries)
+        $puntos_totales =
+            intval(
+                $wpdb->get_var(
+                    $wpdb->prepare(
+                        "
+                        SELECT COALESCE(SUM(puntos), 0)
+                        FROM $tournaments_table
+                        WHERE geek_tag = %d
+                    ",
+                        $user_id,
+                    ),
+                ),
             ) ?? 0;
 
+        // Conteo de todas las victorias en en todos los tcg
+        $victorias_totales = intval(
+            $wpdb->get_var(
+                $wpdb->prepare(
+                    "
+                    SELECT sum(victorias)
+                    FROM $tournaments_table
+                    WHERE geek_tag = %d
+                ",
+                    $user_id,
+                ),
+            ),
+        );
+
         // OMW% (winrate en ladder) ESTA COMO WR% CAMBIAR A OMW% CON SWISS TOURNAMENT
-        $results = $wpdb->get_row(
+        $omw = $wpdb->get_var(
             $wpdb->prepare(
                 "
-                    SELECT wins,losses,draws
-                    FROM $ladders_entries
-                    WHERE competitor_id = %d
+                SELECT COALESCE(AVG(omw), 0)
+                FROM {$tournaments_table}
+                WHERE geek_tag = %d
                 ",
                 $user_id,
             ),
         );
-
-        try {
-            $total_games = $results->wins + $results->losses + $results->draws;
-            $points = $results->wins + $results->draws * 0.5;
-            $omw = ($points / $total_games) * 100;
-        } catch (\Throwable $th) {
-            $omw = 0;
-        }
 
     @endphp
 
@@ -422,20 +414,10 @@ echo ' -->';
                 </div>
 
                 <div class="ml-auto">
-                    @php
-                        $numE = 0;
-                    @endphp
-                    @foreach ($estrellas as $estrella)
-                        @if ($estrella->one_competitor_id == $user_id)
-                            @php
-                                $numE = $numE + 1;
-                            @endphp
-                        @endif
-                    @endforeach
                     <div class="flex">
-                        @if ($numE > 0)
+                        @if ($estrellas > 0)
                             <div class="flex flex-col items-center justify-center">
-                                <div class="flex items-end">{{ $numE }} x <i class="fa-solid fa-star text-4xl text-orange-500"></i></div>
+                                <div class="flex items-end">{{ $estrellas }} x <i class="fa-solid fa-star text-4xl text-orange-500"></i></div>
                                 <div class="mt-2 text-center font-light leading-none">Torneos <br> Semanales</div>
                             </div>
                         @endif
@@ -540,12 +522,12 @@ echo ' -->';
                                 <p class="text-xs">Top 3 Acumulados</p>
                             </div>
                             <div class="stat-item rounded-xl bg-gray-800 p-4">
-                                <p class="text-3xl font-bold">{{ $omw }}%</p>
+                                <p class="text-3xl font-bold">{{ number_format($omw, 2) }}</p>
                                 <p class="text-xs">OMW%</p>
                             </div>
                         </div>
 
-                        <div class="mt-6">
+                        {{-- <div class="mt-6">
                             <h4 class="mb-2 font-semibold">Últimos oponentes</h4>
                             <div class="flex gap-4">
                                 @php
@@ -584,7 +566,7 @@ echo ' -->';
                                     <div class="text-center">
                                         <div class="mx-auto flex h-10 w-10 items-center justify-center overflow-hidden rounded-full bg-gray-700 md:h-16 md:w-16">
                                             @if ($avatar)
-                                                {!! $avatar !!} {{-- Aquí imprimimos directamente el HTML que genera get_avatar --}}
+                                                {!! $avatar !!} 
                                             @else
                                                 <i class="fas fa-user text-gray-400"></i>
                                             @endif
@@ -603,7 +585,7 @@ echo ' -->';
                                 @endforelse
 
                             </div>
-                        </div>
+                        </div> --}}
 
                     </div>
 
@@ -611,92 +593,55 @@ echo ' -->';
                     @php
                         global $wpdb;
 
-                        // Tabla de matches (ajusta si tu prefijo no es wp_)
-                        // $matches_table = $wpdb->prefix . 'tm_matches';
-
                         // Obtener lista de jugadores
-                        $players = get_users([
-                            'role__in' => ['subscriber', 'participant', 'player'], // ajusta roles si usas otros
-                        ]);
+                        $players = $wpdb->get_results("
+                                    SELECT
+                                        MAX(NULLIF(geek_tag, '')) AS geek_tag,
+                                        SUM(puntos) AS puntos
+                                    FROM gc_tcg_tournament_stats 
+                                    GROUP BY COALESCE(NULLIF(geek_tag, ''), tcg_id)
+                                    ORDER BY puntos DESC 
+                                    LIMIT 5; 
+                              ");
 
                         $leaderboard = [];
-
-                        foreach ($players as $player) {
-                            $user_id = $player->ID;
-
-                            $leaderboard[] = [
-                                'id' => $user_id,
-                                'name' => $player->display_name,
-                                'wins' => 0,
-                                'losses' => 0,
-                                'played' => 0,
-                                'avatar' => get_avatar($user_id, 40, '', '', ['class' => 'w-10 h-10 rounded-full']),
-                            ];
-                        }
 
                         // Ordenar por más victorias
                         usort($leaderboard, function ($a, $b) {
                             return $b['wins'] <=> $a['wins'];
                         });
+                        $i = 0;
                     @endphp
 
                     <div class="card p-6">
                         <h3 class="mb-4 flex items-center gap-2 text-xl font-bold">
                             <i class="fas fa-trophy text-yellow-500"></i> Leaderboard Geek
                         </h3>
-                        <div class="space-y-3">
-                            <div class="leaderboard-item flex items-center justify-between rounded-lg bg-gray-800 p-3">
-                                <div class="flex items-center gap-3">
-                                    <?php echo get_avatar($user_id, 40, '', '', ['class' => 'w-10 h-10 rounded-full']); ?>
-                                    <div>
-                                        <p class="font-semibold"><?php echo $user->display_name; ?></p>
-                                        <p class="text-xs text-gray-400">Nivel 0</p>
+                        @foreach ($players as $player)
+                            @php
+                                $user_id = $player->geek_tag ?: '';
+                            @endphp
+                            <div class="space-y-3">
+                                <div class="leaderboard-item flex items-center justify-between rounded-lg bg-gray-800 p-3">
+                                    <div class="flex items-center gap-3">
+                                        <?php echo get_avatar($user_id, 40, '', '', ['class' => 'w-10 h-10 rounded-full']); ?>
+                                        <div>
+                                            <p class="font-semibold"> {{ get_user_by('ID', $user_id)->display_name ?? 'Usuario desconocido' }} </p>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="text-right">
-                                    <p class="text-sm text-green-400">#0</p>
-                                    <p class="text-xs text-gray-400">0 pts</p>
+                                    <div class="text-right">
+                                        <p class="text-sm text-green-400">#{{ ++$i }} </p>
+                                        <p class="text-xs text-gray-400">{{ $player->puntos }} pts</p>
+                                    </div>
                                 </div>
                             </div>
+                        @endforeach
 
-                            <div class="leaderboard-item flex items-center justify-between rounded-lg bg-gray-800 p-3">
-                                <div class="flex items-center gap-3">
-                                    <div class="flex h-10 w-10 items-center justify-center rounded-full bg-gray-700">
-                                        <i class="fas fa-user"></i>
-                                    </div>
-                                    <div>
-                                        <p class="font-semibold">Jugador 2</p>
-                                        <p class="text-xs text-gray-400">Nivel 0</p>
-                                    </div>
-                                </div>
-                                <div class="text-right">
-                                    <p class="text-sm text-yellow-400">#0</p>
-                                    <p class="text-xs text-gray-400">0 pts</p>
-                                </div>
-                            </div>
-
-                            <div class="leaderboard-item flex items-center justify-between rounded-lg bg-gray-800 p-3">
-                                <div class="flex items-center gap-3">
-                                    <div class="flex h-10 w-10 items-center justify-center rounded-full bg-gray-700">
-                                        <i class="fas fa-user"></i>
-                                    </div>
-                                    <div>
-                                        <p class="font-semibold">Jugador 3</p>
-                                        <p class="text-xs text-gray-400">Nivel 0</p>
-                                    </div>
-                                </div>
-                                <div class="text-right">
-                                    <p class="text-sm text-orange-500">#0</p>
-                                    <p class="text-xs text-gray-400">0 pts</p>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="mt-6 text-center">
+                        {{-- <div class="mt-6 text-center">
                             <button class="rounded-lg bg-orange-700 px-4 py-2 text-sm transition hover:bg-orange-600">
                                 Ver ranking completo
                             </button>
-                        </div>
+                        </div> --}}
                     </div>
 
                 </div>
