@@ -36,6 +36,7 @@
 !/wp-content/plugins/
 !/wp-content/plugins/tcg-stats-importer/
 !/wp-content/plugins/geekcollector-api/
+!/wp-content/plugins/geekcollector-tournament-calendar/
 
 # Environment files
 .env
