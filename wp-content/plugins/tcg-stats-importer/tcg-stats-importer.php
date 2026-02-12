@@ -61,13 +61,13 @@ function tcg_stats_create_table()
 
 // Sidebar Menu
 add_action('admin_menu', function () {
-    add_menu_page(
+    add_submenu_page(
+        'edit.php?post_type=gc_tournament',
         'TCG Stats',
         'TCG Stats',
         'manage_options',
         'tcg-stats',
-        'tcg_stats_upload_page',
-        'dashicons-chart-bar'
+        'tcg_stats_upload_page'
     );
 });
 
