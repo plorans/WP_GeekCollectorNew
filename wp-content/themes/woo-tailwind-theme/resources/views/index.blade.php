@@ -211,7 +211,7 @@
                         </svg>
                     </a>
                 </div>
-                <div class="item order-2 mt-3 ml-auto flex items-center justify-center gap-4 text-sm sm:order-3 sm:mt-0 sm:text-base">
+                <div class="item order-2 ml-auto mr-auto mt-3 flex items-center justify-center gap-4 text-sm sm:order-3 sm:mt-0 sm:text-base md:mr-0">
                     <a href="{{ site_url('/leaderboard') }}">
                         <div class="flex cursor-pointer items-center gap-1 text-orange-400">
                             <span class="text-white hover:text-orange-400">LEADERBOARD</span>
@@ -290,7 +290,7 @@
                         [
                             'taxonomy' => 'product_cat',
                             'field' => 'slug', // puedes usar 'id' si prefieres
-                            'terms' => ['drinks', 'snacks','pos-only'], // Slugs de las categorías
+                            'terms' => ['drinks', 'snacks', 'pos-only'], // Slugs de las categorías
                             'operator' => 'NOT IN',
                         ],
                     ],
