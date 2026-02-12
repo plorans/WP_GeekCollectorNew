@@ -2,38 +2,79 @@
   Template Name: Torneos Template
 --}}
 @extends('layouts.app')
+
 @section('content')
-    <script src=" https://cdn.jsdelivr.net/npm/fullcalendar@6.1.19/index.global.min.js "></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.19/index.global.min.js"></script>
 
     <style>
-        /* Estilos generales */
         body {
             font-family: 'Roboto', sans-serif;
         }
 
-        /* Hero Section mejorada */
+        /* HERO */
         .hero-banner {
             position: relative;
             height: 40vh;
-            min-height: 300px;
+            min-height: 280px;
             overflow: hidden;
         }
 
         .hero-banner::after {
             content: '';
             position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(to bottom, rgba(0, 0, 0, 0.3) 0%, rgba(0, 0, 0, 0.7) 100%);
+            inset: 0;
+            background: linear-gradient(to bottom, rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.75));
             z-index: 1;
         }
 
-        /* Calendario mejorado - RESPONSIVE FIXED */
-        /* Event card */
+        /* CALENDARIO */
+        .calendar-container {
+            background: #1a1a1a;
+            border-radius: 12px;
+        }
+
+        .fc {
+            --fc-page-bg-color: #1a1a1a;
+            --fc-neutral-bg-color: #1a1a1a;
+            --fc-border-color: #2a2a2a;
+        }
+
+        .fc .fc-scrollgrid,
+        .fc .fc-daygrid,
+        .fc .fc-daygrid-day {
+            background-color: #1a1a1a;
+        }
+
+        .fc-theme-standard td,
+        .fc-theme-standard th {
+            border-color: #2a2a2a;
+        }
+
+        /* Header */
+        .fc .fc-col-header-cell {
+            background-color: #1a1a1a;
+        }
+
+        .fc .fc-col-header-cell-cushion {
+            color: #f97316;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            padding: 6px 4px;
+        }
+
+        /* Buttons */
+        .fc-button {
+            background-color: #f97316 !important;
+            color: #fff !important;
+            border: none !important;
+        }
+
+        .fc-button:hover {
+            background-color: #ea580c !important;
+        }
+
+        /* EVENT CARD (MOBILE FIRST) */
         .fc-event {
             background: transparent;
             border: none;
@@ -41,323 +82,122 @@
 
         .fc-daygrid-event {
             padding: 2px;
+            white-space: normal !important;
         }
 
-        .fc-daygrid-day-events {
-            margin-top: auto;
-            display: flex;
-            flex-direction: column;
-            gap: 6px;
-        }
-
-        /* Calendar container */
-        .calendar-container {
-            background: #1a1a1a;
-        }
-
-        /* FullCalendar base */
-        .fc {
-            --fc-page-bg-color: #1a1a1a;
-            --fc-neutral-bg-color: #1a1a1a;
-            --fc-border-color: #2a2a2a;
-        }
-
-        /* Grid background */
-        .fc .fc-scrollgrid,
-        .fc .fc-daygrid {
-            background-color: #1a1a1a;
-        }
-
-        /* Day cells */
-        .fc .fc-daygrid-day {
-            background-color: #1a1a1a;
-        }
-
-        /* Cell borders (lighter gray) */
-        .fc-theme-standard td,
-        .fc-theme-standard th {
-            border-color: #2a2a2a;
-        }
-
-        /* Card */
         .fc-event-container {
             background: linear-gradient(180deg, #1f1f1f, #161616);
             border: 1px solid #2a2a2a;
-            border-radius: 10px;
-            padding: 6px 10px;
+            border-radius: 8px;
+            padding: 4px;
             width: 100%;
-            max-width: 100%;
             display: flex;
-            align-items: flex-start;
-            gap: 10px;
-            transition: all 0.25s ease;
-            position: relative;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+            transition: all 0.2s ease;
         }
 
-        /* Accent bar */
-        .fc-event-container::before {
-            content: "";
-            position: absolute;
-            top: 0;
-            left: 0;
-            height: 3px;
-            width: 100%;
-            background: #f97316;
-            border-radius: 10px 10px 0 0;
-        }
-
-        /* Hover */
         .fc-event-container:hover {
-            transform: translateY(-1px);
-            /* was -2px + scale */
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.35);
             border-color: #f97316;
         }
 
-        /* Icon */
+        /* Image */
         .event-icon {
-            width: 40px;
-            height: 40px;
+            width: 22px;
+            height: 22px;
             object-fit: contain;
-            flex-shrink: 0;
         }
 
-        /* Column header background */
-        .fc .fc-col-header-cell {
-            background-color: #1a1a1a;
-            border-color: rgba(255, 255, 255, 0.08);
-        }
-
-        /* Header text */
-        .fc .fc-col-header-cell-cushion {
-            color: #f97316;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-            padding: 8px 4px;
-            background: transparent;
-        }
-
-        .fc-button {
-            background-color: #f97316 !important;
-            color: #fff;
-        }
-
-        /* Text column */
+        /* Text container */
         .event-text {
-            display: flex;
-            flex-direction: column;
-            gap: 2px;
-            min-width: 0;
-            flex: 1 1 auto;
+            width: 100%;
+            text-align: center;
+            overflow: hidden;
         }
 
-        /* Text */
+        /* Title */
         .event-title {
-            font-size: 0.8rem;
+            font-size: 0.65rem;
             font-weight: 600;
             color: #e5e5e5;
             line-height: 1.2;
-            white-space: normal;
             overflow: hidden;
-            display: -webkit-box;
-            -webkit-box-orient: vertical;
-            -webkit-line-clamp: 2;
+            text-overflow: ellipsis;
+            white-space: nowrap;
         }
 
         /* Time */
         .event-time {
-            font-size: 0.6rem;
+            font-size: 0.55rem;
             color: #9ca3af;
         }
 
-        .event-type {
-            font-size: 0.5rem;
-            color: #9ca3af;
-            text-transform: uppercase;
-            letter-spacing: 0.04em;
-        }
-
-        /* Reduce day cell height */
+        /* Day height mobile */
         .fc-daygrid-day-frame {
-            min-height: 90px;
-            padding: 6px;
+            min-height: 70px;
+            padding: 4px;
         }
 
-        @media (min-width: 1024px) {
+        /* DESKTOP OVERRIDE */
+        @media (min-width: 768px) {
+            .fc-event-container {
+                flex-direction: row;
+                align-items: flex-start;
+                padding: 6px 10px;
+                gap: 8px;
+            }
+
+            .event-icon {
+                width: 36px;
+                height: 36px;
+            }
+
+            .event-text {
+                text-align: left;
+            }
+
+            .event-title {
+                font-size: 0.8rem;
+                white-space: normal;
+                display: -webkit-box;
+                -webkit-line-clamp: 2;
+                -webkit-box-orient: vertical;
+            }
+
+            .event-time {
+                font-size: 0.65rem;
+            }
+
             .fc-daygrid-day-frame {
                 min-height: 110px;
+                padding: 6px;
             }
         }
 
-        /* Rankings mejorados */
-        .leaderboard-item {
-            transition: all 0.3s ease;
-            background: linear-gradient(to right, #1a1a1a, #2a2a2a);
-            border: 1px solid #333;
+        /* Mobile */
+        .fc-list {
+            background: #1a1a1a;
         }
 
-        .leaderboard-item:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        .fc-list-event {
+            background: #161616;
+            border: 1px solid #2a2a2a;
+            border-radius: 8px;
+            margin-bottom: 6px;
+            padding: 8px;
+        }
+
+        .fc-list-event:hover {
             border-color: #f97316;
         }
 
-        /* Tabs mejorados */
-        .hs-tab-active\:bg-orange-500.hs-tab-active {
-            background-color: #f97316 !important;
-        }
-
-        [role="tab"] {
-            transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
-        }
-
-        [role="tab"]::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 50%;
-            width: 0;
-            height: 3px;
-            background: #f97316;
-            transition: all 0.3s ease;
-            transform: translateX(-50%);
-        }
-
-        [role="tab"]:hover::after,
-        .hs-tab-active::after {
-            width: 80%;
-        }
-
-        /* Top 3 cards mejoradas */
-        .top-player-card {
-            transition: all 0.3s ease;
-            background: linear-gradient(to bottom, #1a1a1a, #2a2a2a);
-            border: 1px solid #333;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .top-player-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 4px;
-            background: #f97316;
-            transform: scaleX(0);
-            transform-origin: left;
-            transition: transform 0.3s ease;
-        }
-
-        .top-player-card:hover::before {
-            transform: scaleX(1);
-        }
-
-        .top-player-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
-        }
-
-        .avatar {
-            width: 64px;
-            height: 64px;
-            object-fit: cover;
-        }
-
-        /* Animaciones */
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .animate-fade-in {
-            animation: fadeIn 0.6s ease forwards;
-        }
-
-        .delay-100 {
-            animation-delay: 0.1s;
-        }
-
-        .delay-200 {
-            animation-delay: 0.2s;
-        }
-
-        .delay-300 {
-            animation-delay: 0.3s;
-        }
-
-        /* Scroll personalizado */
-        .custom-scrollbar::-webkit-scrollbar {
-            width: 6px;
-        }
-
-        .custom-scrollbar::-webkit-scrollbar-track {
-            background: #1a1a1a;
-            border-radius: 3px;
-        }
-
-        .custom-scrollbar::-webkit-scrollbar-thumb {
-            background: #f97316;
-            border-radius: 3px;
-        }
-
-        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-            background: #ea580c;
-        }
-
-        /* Efectos de hover en stats */
-        .stat-box {
-            transition: all 0.3s ease;
-            background: #1a1a1a;
-            border: 1px solid #333;
-        }
-
-        .stat-box:hover {
-            background: #2a2a2a;
-            border-color: #f97316;
-            transform: translateY(-3px);
-        }
-
-        /* Responsive improvements */
-        @media (max-width: 768px) {
-            .top-players-container {
-                flex-direction: column;
-            }
-
-            .top-player-card {
-                margin-bottom: 1rem;
-            }
-
-            [role="tab"] {
-                font-size: 0.875rem;
-                padding: 0.75rem 0.5rem;
-            }
-
-            .fc .fc-toolbar {
-                flex-direction: column;
-                gap: 10px;
-            }
-
-            .fc .fc-toolbar-chunk {
-                display: flex;
-                justify-content: center;
-                width: 100%;
-            }
+        :root {
+            --fc-list-event-hover-bg-color: #1f1f1f !important;
         }
     </style>
 
-    <!-- Hero Section Mejorada -->
+    <!-- HERO -->
     <div class="-mt-2 overflow-hidden bg-black">
         <div class="hero-banner relative my-2 mb-10 aspect-[3/3] w-full overflow-hidden sm:aspect-[16/7] md:aspect-[16/6]">
             <img src="{{ asset('/resources/images/torneos4.png') }}" class="absolute h-full w-full object-cover object-center" alt="Banner principal" />
@@ -370,297 +210,48 @@
 
     <div class="container mx-auto px-2 py-4 sm:px-4">
 
-        <!-- Calendario Mejorado -->
-        <div class="calendar-container animate-fade-in mb-10">
-            <div id="calendar" class="p-4 capitalize text-white md:p-6">
-            </div>
+        <!-- CALENDAR -->
+        <div class="calendar-container mb-10 p-4 text-white md:p-6">
+            <div id="calendar"></div>
         </div>
 
-        @php
-
-        @endphp
-
-        <!-- Rankings Mejorados -->
-        {{-- <div class="mb-10 grid grid-cols-1 gap-6 px-2 md:px-6 lg:grid-cols-3">
-            <div class="col-span-1 px-4 py-2 md:col-span-1">
-                <div class="mb-4 flex items-center text-2xl font-semibold text-orange-500">
-                    <i class="fas fa-trophy mr-2 text-yellow-500"></i> Leaderboard
-                </div>
-                @php
-                    global $wpdb;
-
-                    $players = $wpdb->get_results("
-                                    SELECT
-                                        MAX(NULLIF(geek_tag, '')) AS geek_tag,
-                                        SUM(puntos) AS puntos
-                                    FROM gc_tcg_tournament_stats 
-                                    GROUP BY COALESCE(NULLIF(geek_tag, ''), tcg_id)
-                                    ORDER BY puntos DESC 
-                                    LIMIT 10; 
-                              ");
-                    $i = 0;
-                @endphp
-                <div class="custom-scrollbar max-h-[405px] overflow-y-auto">
-                    @foreach ($players as $player)
-                    @php
-                         $user_id = $player->geek_tag ?: '';
-                    @endphp
-                        <div class="animate-fade-in delay-{{ ($i - 1) * 100 }} px-2 py-2">
-                            <div class="leaderboard-item flex items-center justify-between rounded-lg p-3">
-                                <div class="flex items-center gap-3">
-                                    {!! get_avatar($user_id, 40, '', '', ['class' => 'w-10 h-10 rounded-full']) !!}
-                                    <div>
-                                        <p class="font-semibold text-white">{{ get_user_by('ID', $user_id)->display_name ?? 'Usuario desconocido' }}</p>
-                                    </div>
-                                </div>
-                                <div class="text-right">
-                                    <p class="text-sm text-green-400">#{{ ++$i }}</p>
-                                    <p class="text-xs text-gray-400"> {{ $player->puntos }} pts</p>
-                                </div>
-                            </div>
-                        </div>
-                    @endforeach
-                </div>
-            </div>
-
-            <div class="col-span-2 mt-6 text-white lg:mt-0">
-                <div class="py-2 pl-0 md:pl-8">
-                    <div class="mb-4 flex items-center text-2xl font-semibold text-orange-500">
-                        <i class="fas fa-chess-knight mr-2"></i> Categorías
-                    </div>
-
-                    <div class="overflow-hidden rounded-t-lg border-b border-gray-700">
-                        <nav class="flex flex-col justify-between md:flex-row" aria-label="Tabs" role="tablist">
-                            <button type="button"
-                                class="active hs-tab-active:bg-orange-500 hs-tab-active:text-white w-full cursor-pointer bg-black py-3 text-lg font-semibold text-white"
-                                id="tabs-item-1" aria-selected="false" data-hs-tab="#tabs-1" aria-controls="tabs-1" role="tab">
-                                One Piece
-                            </button>
-
-                            <button type="button" class="w-full cursor-pointer bg-black py-3 text-lg font-semibold text-white" id="tabs-item-2" aria-selected="false"
-                                data-hs-tab="#tabs-2" aria-controls="tabs-2" role="tab">
-                                Pokemon
-                            </button>
-                            <button type="button" class="w-full cursor-pointer bg-black py-3 text-lg font-semibold text-white" id="tabs-item-3" aria-selected="false"
-                                data-hs-tab="#tabs-3" aria-controls="tabs-3" role="tab">
-                                Magic The Gathering
-                            </button>
-
-                            <button type="button" class="w-full cursor-pointer bg-black py-3 text-lg font-semibold text-white" id="tabs-item-4" aria-selected="false"
-                                data-hs-tab="#tabs-4" aria-controls="tabs-4" role="tab">
-                                Lorcana
-                            </button>
-
-                            <button type="button" class="w-full cursor-pointer bg-black py-3 text-lg font-semibold text-white" id="tabs-item-5" aria-selected="false"
-                                data-hs-tab="#tabs-5" aria-controls="tabs-5" role="tab">
-                                Star Wars
-                            </button>
-                        </nav>
-                    </div>
-
-                    @php
-                        $tcgs = [['OnePiece' => 2], ['Pokemon' => 5], ['Magic' => 3], ['Lorcana' => 4], ['StarWars' => 1]];
-                        $keys = array_reduce(
-                            $tcgs,
-                            function ($carry, $item) {
-                                return array_merge($carry, array_keys($item));
-                            },
-                            [],
-                        );
-
-                        global $wpdb;
-                        $ladder_id = 1;
-                        $tournaments_table = $wpdb->prefix . 'tcg_tournament_stats';
-
-                        foreach ($tcgs as $tcg) {
-                            $ladder_id = current($tcg);
-                            $tcg_name = key($tcg);
-
-                            $rankings = $wpdb->get_results(
-                                $wpdb->prepare(
-                                    "
-                                    SELECT competitor_id, points, wins
-                                    FROM $tournaments_table
-                                    WHERE ladder_id = %d
-                                    ORDER BY points DESC
-                                    LIMIT 3
-                                    ",
-                                    $ladder_id,
-                                ),
-                            );
-
-                            $rank = $wpdb->get_col(
-                                $wpdb->prepare(
-                                    "
-                                    SELECT competitor_id
-                                    FROM $tournaments_table
-                                    WHERE ladder_id = %d
-                                    ORDER BY points DESC
-                                    ",
-                                    $ladder_id,
-                                ),
-                            );
-
-                            $top[$tcg_name] = [];
-                            foreach ($rankings as $ranking) {
-                                $top[$tcg_name][] = [
-                                    'user_id' => get_userdata($ranking->competitor_id),
-                                    'name' => get_userdata($ranking->competitor_id)->display_name,
-                                    'rank' => array_search($ranking->competitor_id, $rank) + 1,
-                                    'pts' => $ranking->points,
-                                    'torneos' => intval(
-                                        $wpdb->get_var(
-                                            $wpdb->prepare(
-                                                "
-                                                SELECT COUNT(DISTINCT tournament_id)
-                                                FROM $tournaments_entries
-                                                WHERE competitor_id = %d
-                                                ",
-                                                $ranking->competitor_id,
-                                            ),
-                                        ),
-                                    ),
-                                    'wins' => $ranking->wins,
-                                ];
-                            }
-                        }
-
-                        $i = 1;
-                    @endphp
-
-                    @foreach ($top as $tcg => $players)
-                        <div class="mt-3">
-                            <div id="tabs-{{ $i }}" class="{{ $i === 1 ? ' ' : 'hidden' }}" role="tabpanel" aria-labelledby="tabs-item-{{ $i }}">
-                                <div class="mb-4 flex items-center justify-center gap-2 text-center text-2xl text-orange-400">
-                                    <i class="fa-solid fa-medal text-yellow-500"></i>Top 3
-                                </div>
-
-                                <div class="max-h-380 px-3">
-                                    <div class="top-players-container flex flex-col justify-between gap-4 text-white md:flex-row">
-                                        @foreach ($players as $index => $player)
-                                            <div class="top-player-card animate-fade-in delay-{{ $index * 100 }} flex h-full w-full flex-col items-center rounded-lg p-4">
-                                                <div class="mb-3 grid min-w-full grid-cols-2 items-center">
-                                                    <div class="flex justify-center">
-                                                        {!! get_avatar($player['user_id']->ID, 64, '', '', ['class' => 'w-16 h-16 rounded-full border-2 border-orange-500']) !!}
-                                                    </div>
-                                                    <div class="flex justify-center text-center">
-                                                        <div class="font-semibold leading-tight text-white">{{ $player['name'] }}</div>
-                                                    </div>
-                                                </div>
-
-                                                <div class="grid grid-cols-2 gap-3 text-center">
-                                                    <div class="stat-box rounded-xl p-3">
-                                                        <p class="text-2xl font-bold text-orange-500 md:text-3xl">{{ $player['rank'] }}</p>
-                                                        <p class="mt-1 text-xs text-gray-300">Ranking Actual</p>
-                                                    </div>
-                                                    <div class="stat-box rounded-xl p-3">
-                                                        <p class="text-2xl font-bold text-orange-500 md:text-3xl">{{ $player['pts'] }}</p>
-                                                        <p class="mt-1 text-xs text-gray-300">Puntos Totales</p>
-                                                    </div>
-                                                    <div class="stat-box rounded-xl p-3">
-                                                        <p class="text-2xl font-bold text-orange-500 md:text-3xl">{{ $player['torneos'] }}</p>
-                                                        <p class="mt-1 text-xs text-gray-300">Torneos Jugados</p>
-                                                    </div>
-                                                    <div class="stat-box rounded-xl p-3">
-                                                        <p class="text-2xl font-bold text-orange-500 md:text-3xl">{{ $player['wins'] }}</p>
-                                                        <p class="mt-1 text-xs text-gray-300">Victorias Totales</p>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        @endforeach
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        @php
-                            $i++;
-                        @endphp
-                    @endforeach
-                </div>
-            </div>
-        </div> --}}
-
-        <!-- Mapa Mejorado -->
-        <section class="animate-fade-in mt-10 flex flex-col items-start justify-center overflow-hidden rounded-xl bg-black text-white shadow-xl lg:flex-row">
-            <div class="py-30 flex h-auto w-full md:mx-10 md:px-20 lg:w-[45%]">
-                <ul class="flex w-full flex-col items-start justify-start">
-                    <li class="w-full font-bold">
-                        <div class="flex w-full flex-row items-center">
-                            <div class="mb-2 flex flex-col justify-center py-3">
-                                <h2 class="text-4xl text-orange-500">Encuéntranos</h2>
-                                <p class="mt-1 text-gray-300">Ven y únete a la comunidad</p>
-                            </div>
-                        </div>
-                    </li>
-
-                    <li class="w-full font-bold">
-                        <div class="flex w-full flex-row items-center transition-colors duration-300 hover:text-orange-400">
-                            <div class="mx-3 my-auto">
-                                <img class="h-10 w-10" src="{{ get_template_directory_uri() . '/resources/images/nosotros/llamar.png' }}" alt="Ícono de Teléfono">
-                            </div>
-                            <div class="flex flex-col items-start justify-center py-3">
-                                <h2 class="text-sm text-gray-400">TELÉFONO:</h2>
-                                <p class="text-lg md:text-xl">+52 81 2080 2420</p>
-                            </div>
-                        </div>
-                        <div class="h-[1px] w-full bg-gray-800"></div>
-                    </li>
-                    <li class="w-full font-bold">
-                        <div class="flex w-full flex-row items-center transition-colors duration-300 hover:text-orange-400">
-                            <div class="mx-3 my-auto">
-                                <img class="h-10 w-10" src="{{ get_template_directory_uri() . '/resources/images/nosotros/localizacion.png' }}" alt="Ícono de Ubicación">
-                            </div>
-                            <div class="flex flex-col items-start justify-center py-3">
-                                <h2 class="text-sm text-gray-400">UBICACIÓN:</h2>
-                                <p class="text-lg md:text-xl">AVE. ALFONSO REYES 255</p>
-                            </div>
-                        </div>
-                    </li>
-                </ul>
-            </div>
-            <div class="h-80 w-full lg:h-96 lg:w-[55%]">
-                <iframe
-                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3596.8868565144835!2d-100.27947329999999!3d25.641880399999998!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8662bf99d30c3957%3A0x3492755f898822d6!2sAv.%20Alfonso%20Reyes%20255%2C%20Contry%2C%2064860%20Monterrey%2C%20N.L.!5e0!3m2!1ses-419!2smx!4v1755549626022!5m2!1ses-419!2smx"
-                    width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"
-                    class="rounded-r-xl"></iframe>
-            </div>
-        </section>
     </div>
 
     <script>
         document.addEventListener('DOMContentLoaded', async function() {
-            var calendarEl = document.getElementById('calendar');
 
+            const calendarEl = document.getElementById('calendar');
             const response = await fetch('/wp-json/gc/v1/tournaments');
-
             const events = await response.json();
+            const isMobile = window.innerWidth < 768;
 
-            var calendar = new FullCalendar.Calendar(calendarEl, {
-                initialView: 'dayGridMonth',
+            const calendar = new FullCalendar.Calendar(calendarEl, {
+
+                initialView: isMobile ? 'listWeek' : 'dayGridMonth',
                 height: 'auto',
                 locale: 'es',
+
                 headerToolbar: {
                     left: '',
                     center: 'title',
                     right: 'prev,next'
                 },
+
                 titleFormat: {
                     year: 'numeric',
                     month: 'short'
                 },
+
                 events: events,
-                dayCellDidMount: function(arg) {
-                    const cell = arg.el;
-                    cell.classList.add('transition-colors', 'duration-200');
-                },
 
                 eventContent: function(arg) {
+
                     const {
                         imageurl
                     } = arg.event.extendedProps;
                     const title = arg.event.title;
-
                     const startDate = arg.event.start;
+
                     const time = startDate ?
                         startDate.toLocaleTimeString('es-MX', {
                             hour: '2-digit',
@@ -670,6 +261,25 @@
 
                     const container = document.createElement('div');
                     container.className = 'fc-event-container';
+
+                    if (isMobile && arg.view.type === 'listWeek') {
+                        const titleEl = document.createElement('div');
+                        titleEl.textContent = title;
+                        titleEl.style.fontWeight = '600';
+                        titleEl.style.color = '#fff';
+
+                        const timeEl = document.createElement('div');
+                        timeEl.textContent = time;
+                        timeEl.style.fontSize = '0.75rem';
+                        timeEl.style.color = '#9ca3af';
+
+                        container.appendChild(titleEl);
+                        container.appendChild(timeEl);
+
+                        return {
+                            domNodes: [container]
+                        };
+                    }
 
                     if (imageurl) {
                         const img = document.createElement('img');
@@ -697,73 +307,10 @@
                     return {
                         domNodes: [container]
                     };
-                },
-
-
-
-
-                eventDidMount: function(arg) {
-                    // Añadir tooltip con información del evento
-                    const element = arg.el;
-                    const event = arg.event;
-
-                    element.setAttribute('data-bs-toggle', 'tooltip');
-                    element.setAttribute('data-bs-placement', 'top');
-                    element.setAttribute('title', event.title);
-                },
-
+                }
             });
 
             calendar.render();
-
-            // Inicializar tooltips
-            var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
-            var tooltipList = tooltipTriggerList.map(function(tooltipTriggerEl) {
-                return new bootstrap.Tooltip(tooltipTriggerEl)
-            });
         });
-    </script>
-
-    <script>
-        // Tabs bg
-        const tabs = document.querySelectorAll('[role="tab"]');
-
-        tabs.forEach(tab => {
-            tab.addEventListener('click', () => {
-                // Poner todos los tabs bg-black
-                tabs.forEach(t => t.classList.remove('bg-orange-500'));
-                tabs.forEach(t => t.classList.add('bg-black'));
-
-                // Poner bg a tab seleccionado
-                tab.classList.add('bg-orange-500');
-                tab.classList.remove('bg-black');
-            });
-        });
-
-        // Primer tab seleccionado
-        if (tabs.length > 0) {
-            tabs[0].classList.add('bg-orange-500');
-            tabs[0].classList.remove('bg-black');
-
-        }
-
-        // Animación de elementos al hacer scroll
-        function checkScroll() {
-            const elements = document.querySelectorAll('.animate-fade-in');
-
-            elements.forEach(element => {
-                const elementPosition = element.getBoundingClientRect().top;
-                const screenPosition = window.innerHeight / 1.3;
-
-                if (elementPosition < screenPosition) {
-                    element.style.opacity = '1';
-                    element.style.transform = 'translateY(0)';
-                }
-            });
-        }
-
-        // Ejecutar al cargar y al hacer scroll
-        window.addEventListener('load', checkScroll);
-        window.addEventListener('scroll', checkScroll);
     </script>
 @endsection
