@@ -840,3 +840,71 @@ add_filter('woocommerce_product_query_tax_query', function ($tax_query, $query) 
 
     return $tax_query;
 }, 10, 2);
+
+
+// ===================================================================================================================================================================
+// Filtrar productos por membrecía
+// ====================================================================================================================================================================
+
+add_filter('woocommerce_is_purchasable', function ($purchasable, $product) {
+
+    $restricted_category_slug = 'torneos';
+    $required_subscription_product_ids = [1473, 1474, 1475, 1476]; // your subscription product IDs 
+
+    // Only apply restriction if product is in the restricted category
+    if (has_term($restricted_category_slug, 'product_cat', $product->get_id())) {
+
+        // Must be logged in
+        if (!is_user_logged_in()) {
+            return false;
+        }
+
+        $user_id = get_current_user_id();
+
+        // Check for active subscription
+        if (
+            function_exists('wcs_user_has_subscription') &&
+            array_filter($required_subscription_product_ids, function ($product_id) use ($user_id) {
+                return wcs_user_has_subscription($user_id, $product_id, 'active');
+            })
+        ) {
+            return true;
+        }
+
+        return false;
+    }
+
+    return $purchasable;
+}, 10, 2);
+
+// ===================================================================================================================================================================
+// Función reutilizable para verificar si el usuario puede comprar un producto específico basado en su categoría y suscripciones
+// ===================================================================================================================================================================
+
+function gc_user_can_purchase_product($product_id)
+{
+    $restricted_category_slug = 'torneos';
+    $required_subscription_product_ids = [1473, 1474, 1475, 1476];
+
+    if (!has_term($restricted_category_slug, 'product_cat', $product_id)) {
+        return true; // not restricted
+    }
+
+    if (!is_user_logged_in()) {
+        return false;
+    }
+
+    if (!function_exists('wcs_user_has_subscription')) {
+        return false;
+    }
+
+    $user_id = get_current_user_id();
+
+    foreach ($required_subscription_product_ids as $sub_id) {
+        if (wcs_user_has_subscription($user_id, $sub_id, 'active')) {
+            return true;
+        }
+    }
+
+    return false;
+}

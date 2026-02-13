@@ -300,18 +300,28 @@
 
                     {{-- Mostrar botón de compra normal o funcionalidad de subasta --}}
                     @if (!$is_auction)
-                        {{-- Cantidad + botón de compra para productos normales --}}
+                        @php
+                            $can_purchase = gc_user_can_purchase_product($product->get_id());
+                        @endphp
+
                         <form class="cart" action="{{ esc_url(apply_filters('woocommerce_add_to_cart_form_action', $product->get_permalink())) }}" method="post"
                             enctype='multipart/form-data'>
+
                             <div class="flex items-center gap-4 pt-4">
-                                {{-- Input de cantidad de WooCommerce --}}
+
                                 {!! woocommerce_quantity_input([], $product, false) !!}
 
-                                {{-- Botón de añadir al carrito --}}
-                                <button type="submit" name="add-to-cart" value="{{ $product->get_id() }}"
-                                    class="transform rounded-lg bg-orange-600 px-6 py-3 font-medium text-white shadow-lg transition-all duration-300 hover:scale-105 hover:bg-orange-700 hover:shadow-orange-500">
-                                    AÑADIR AL CARRITO
-                                </button>
+                                @if ($can_purchase)
+                                    <button type="submit" name="add-to-cart" value="{{ $product->get_id() }}"
+                                        class="transform rounded-lg bg-orange-600 px-6 py-3 font-medium text-white shadow-lg transition-all duration-300 hover:scale-105 hover:bg-orange-700 hover:shadow-orange-500">
+                                        AÑADIR AL CARRITO
+                                    </button>
+                                @else
+                                    <button type="button" disabled class="cursor-not-allowed rounded-lg bg-gray-600 px-6 py-3 font-medium text-white opacity-60">
+                                        EXCLUSIVO PARA MEMBRESÍAS DE PAGA
+                                    </button>
+                                @endif
+
                             </div>
                         </form>
                     @elseif ($is_finished || $is_closed)
