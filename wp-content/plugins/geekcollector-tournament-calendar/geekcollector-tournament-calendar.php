@@ -52,7 +52,7 @@ add_action('rest_api_init', function () {
                 $events[] = [
                     'title' => get_field('titulo', $post->ID),
                     'start' => get_field('fecha', $post->ID),
-                    'url'   => get_field('producto', $post->ID) ?: null,
+                    'link'   => get_field('producto', $post->ID) ?: null,
                     'imageurl' => gc_get_tcg_image($tcg),
                     'tcg'      => $tcg,
                 ];

@@ -74,6 +74,10 @@
             background-color: #ea580c !important;
         }
 
+        .fc-event-container {
+            cursor: pointer;
+        }
+
         /* EVENT CARD (MOBILE FIRST) */
         .fc-event {
             background: transparent;
@@ -100,6 +104,10 @@
 
         .fc-event-container:hover {
             border-color: #f97316;
+        }
+
+        .fc-toolbar-title{
+            text-transform: capitalize;
         }
 
         /* Image */
@@ -243,6 +251,18 @@
                 },
 
                 events: events,
+
+                eventDidMount: function(info) {
+                    // Prevent FullCalendar internal link logic
+                    info.el.removeAttribute('href');
+                },
+
+                eventClick: function(info) {
+                    const link = info.event.extendedProps.link;
+                    if (link) {
+                        window.location.href = link;
+                    }
+                },
 
                 eventContent: function(arg) {
 
