@@ -355,3 +355,86 @@ function table()
     global $wpdb;
     return $wpdb->prefix . 'tcg_tournament_stats';
 }
+
+
+
+
+// ==============================
+//  CAMPO COLOR DE FONDO PARA LA APP
+// ==============================
+
+
+// 1) Add field to user profile screen
+add_action('show_user_profile', 'gc_app_bg_color_field');
+add_action('edit_user_profile', 'gc_app_bg_color_field');
+
+function gc_app_bg_color_field($user)
+{
+    if (!current_user_can('edit_user', $user->ID)) return;
+
+    $value = get_user_meta($user->ID, 'gc_app_bg_color', true);
+    if (!$value) $value = '#0b0f14';
+?>
+    <h2>GeekCollector App</h2>
+    <table class="form-table" role="presentation">
+        <tr>
+            <th><label for="gc_app_bg_color">App background color</label></th>
+            <td>
+                <input type="text" name="gc_app_bg_color" id="gc_app_bg_color"
+                    value="<?php echo esc_attr($value); ?>"
+                    class="regular-text" placeholder="#0b0f14" />
+                <p class="description">Hex color, e.g. #0b0f14</p>
+            </td>
+        </tr>
+    </table>
+<?php
+}
+
+// 2) Save field
+add_action('personal_options_update', 'gc_save_app_bg_color_field');
+add_action('edit_user_profile_update', 'gc_save_app_bg_color_field');
+
+function gc_save_app_bg_color_field($user_id)
+{
+    if (!current_user_can('edit_user', $user_id)) return;
+
+    $raw = isset($_POST['gc_app_bg_color']) ? trim($_POST['gc_app_bg_color']) : '';
+    if ($raw === '') {
+        delete_user_meta($user_id, 'gc_app_bg_color');
+        return;
+    }
+
+    // Validate hex: #RGB or #RRGGBB
+    if (!preg_match('/^#([A-Fa-f0-9]{3}|[A-Fa-f0-9]{6})$/', $raw)) {
+        // If invalid, do not save (you could also save default)
+        return;
+    }
+
+    update_user_meta($user_id, 'gc_app_bg_color', $raw);
+}
+
+add_action('rest_api_init', function () {
+    register_rest_route('geekcollector/v1', '/user/ui', [
+        'methods'  => 'GET',
+        'callback' => 'gc_rest_get_user_ui',
+        'permission_callback' => '__return_true',
+    ]);
+});
+
+function gc_rest_get_user_ui(WP_REST_Request $request)
+{
+    $user_id = intval($request->get_param('user_id'));
+
+    if (!$user_id) {
+        return new WP_REST_Response(['error' => 'Missing user_id'], 400);
+    }
+
+    $bg = get_user_meta($user_id, 'gc_app_bg_color', true);
+
+    return new WP_REST_Response([
+        'background' => [
+            'type' => 'color',
+            'value' => $bg,
+        ],
+    ], 200);
+}
