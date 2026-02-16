@@ -106,7 +106,7 @@
             border-color: #f97316;
         }
 
-        .fc-toolbar-title{
+        .fc-toolbar-title {
             text-transform: capitalize;
         }
 
@@ -224,6 +224,51 @@
         </div>
 
     </div>
+
+    <!-- Mapa Mejorado -->
+    <section class="animate-fade-in my-10 flex flex-col items-start justify-center overflow-hidden rounded-xl bg-black text-white shadow-xl lg:flex-row">
+        <div class="pt-15 flex h-auto w-full md:mx-10 md:px-20 lg:w-[45%]">
+            <ul class="flex w-full flex-col items-start justify-start">
+                <li class="w-full font-bold">
+                    <div class="flex w-full flex-row items-center">
+                        <div class="mb-2 flex flex-col justify-center py-3">
+                            <h2 class="text-4xl text-orange-500">Encuéntranos</h2>
+                            <p class="mt-1 text-gray-300">Ven y únete a la comunidad</p>
+                        </div>
+                    </div>
+                </li>
+
+                <li class="w-full font-bold">
+                    <div class="flex w-full flex-row items-center transition-colors duration-300 hover:text-orange-400">
+                        <div class="mx-3 my-auto">
+                            <img class="h-10 w-10" src="{{ get_template_directory_uri() . '/resources/images/nosotros/llamar.png' }}" alt="Ícono de Teléfono">
+                        </div>
+                        <div class="flex flex-col items-start justify-center py-3">
+                            <h2 class="text-sm text-gray-400">TELÉFONO:</h2>
+                            <p class="text-lg md:text-xl">+52 81 2080 2420</p>
+                        </div>
+                    </div>
+                    <div class="h-[1px] w-full bg-gray-800"></div>
+                </li>
+                <li class="w-full font-bold">
+                    <div class="flex w-full flex-row items-center transition-colors duration-300 hover:text-orange-400">
+                        <div class="mx-3 my-auto">
+                            <img class="h-10 w-10" src="{{ get_template_directory_uri() . '/resources/images/nosotros/localizacion.png' }}" alt="Ícono de Ubicación">
+                        </div>
+                        <div class="flex flex-col items-start justify-center py-3">
+                            <h2 class="text-sm text-gray-400">UBICACIÓN:</h2>
+                            <p class="text-lg md:text-xl">AVE. ALFONSO REYES 255</p>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+        <div class="h-80 w-full flex items-center lg:h-96 lg:w-[55%]">
+            <iframe
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3596.8868565144835!2d-100.27947329999999!3d25.641880399999998!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8662bf99d30c3957%3A0x3492755f898822d6!2sAv.%20Alfonso%20Reyes%20255%2C%20Contry%2C%2064860%20Monterrey%2C%20N.L.!5e0!3m2!1ses-419!2smx!4v1755549626022!5m2!1ses-419!2smx"
+                width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade" class="rounded-r-xl"></iframe>
+        </div>
+    </section>
 
     <script>
         document.addEventListener('DOMContentLoaded', async function() {
