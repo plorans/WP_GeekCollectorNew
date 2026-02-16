@@ -14,6 +14,7 @@
 
     $all_category_posts = new WP_Query([
         'post_type' => 'product',
+        'post_status' => 'publish',
         'posts_per_page' => -1,
         'fields' => 'ids',
         'tax_query' => [
