@@ -68,13 +68,15 @@ function gc_login_user($request)
         $subs = wcs_get_users_subscriptions($user->ID);
 
         foreach ($subs as $sub) {
-            $subscriptions[] = [
-                'id'           => $sub->get_id(),
-                'status'       => $sub->get_status(),
-                'total'        => $sub->get_total(),
-                'start'        => $sub->get_date_created()?->date('Y-m-d H:i:s'),
-                'next_payment' => $sub->get_date('next_payment')
-            ];
+            if ($sub->get_status() === 'active') {
+                $subscriptions[] = [
+                    'id'           => $sub->get_id(),
+                    'status'       => $sub->get_status(),
+                    'total'        => $sub->get_total(),
+                    'start'        => $sub->get_date_created()?->date('Y-m-d H:i:s'),
+                    'next_payment' => $sub->get_date('next_payment')
+                ];
+            }
         }
     }
 
