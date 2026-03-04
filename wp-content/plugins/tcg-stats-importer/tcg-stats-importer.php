@@ -29,6 +29,11 @@ function tcg_stats_create_table()
     global $wpdb;
 
     $table = $wpdb->prefix . 'tcg_tournament_stats';
+
+    if ($wpdb->get_var("SHOW TABLES LIKE '$table'") === $table) {
+        return;
+    }
+
     $charset_collate = $wpdb->get_charset_collate();
 
     $sql = "CREATE TABLE $table (
