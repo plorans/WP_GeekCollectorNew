@@ -247,351 +247,102 @@
             <!-- Columna Izquierda -->
             <div class="col-span-12 flex flex-col md:col-span-6">
                 <!-- Pregunta 1 -->
-                <div>
-                    <button type="button"
-                        class="hs-collapse-toggle inline-flex items-center gap-x-2 bg-black px-4 py-3 text-left text-lg font-medium uppercase text-white md:text-xl"
-                        id="pregunta-l1" aria-expanded="false" aria-controls="pregunta-l1-heading" data-hs-collapse="#pregunta-l1-heading">
-                        <svg class="hs-collapse-open:rotate-90 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="m9 6 6 6-6 6"></path>
-                        </svg>
-                        ¿Qué son las membresías?
-                    </button>
-                    <div id="pregunta-l1-heading" class="hs-collapse hidden w-full overflow-hidden uppercase transition-[height] duration-300" aria-labelledby="pregunta-l1">
-                        <div class="rounded-lg bg-black px-4 py-3">
-                            <p class="text-white dark:text-neutral-400">
-                                 Nuestras membresías son programas especiales diseñados para ofrecer beneficios exclusivos a nuestros Collectors más apasionados. 
-                                 Al unirte, obtienes acceso anticipado a productos, descuentos especiales, dinámicas únicas, y experiencias personalizadas que fortalecen tu conexión con 
-                                 la comunidad coleccionista.
-                            </p>
-                        </div>
-                    </div>
-                </div>
+                <x-faq-accordion question="¿Qué son las membresías?">
+                    Nuestras membresías son programas especiales diseñados para ofrecer beneficios exclusivos a nuestros Collectors más apasionados.
+                    Al unirte, obtienes acceso anticipado a productos, descuentos especiales, dinámicas únicas, y experiencias personalizadas que fortalecen tu conexión
+                    con la comunidad coleccionista.
+                </x-faq-accordion>
+
                 <!-- Pregunta 2 -->
-                <div>
-                    <button type="button"
-                        class="hs-collapse-toggle inline-flex items-center gap-x-2 bg-black px-4 py-3 text-left text-lg font-medium uppercase text-white md:text-xl"
-                        id="pregunta-l2" aria-expanded="false" aria-controls="pregunta-l2-heading" data-hs-collapse="#pregunta-l2-heading">
-                        <svg class="hs-collapse-open:rotate-90 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                            fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="m9 6 6 6-6 6"></path>
-                        </svg>
-                        ¿Cuánto dura la membresía?
-                    </button>
-                    <div id="pregunta-l2-heading" class="hs-collapse hidden w-full overflow-hidden uppercase transition-[height] duration-300"
-                        aria-labelledby="pregunta-l2">
-                        <div class="rounded-lg bg-black px-4 py-3">
-                            <p class="text-white dark:text-neutral-400">
-                                Cada membresía tiene duración mensual. Se renueva automáticamente, a menos que decidas cancelarla antes del siguiente ciclo.
-                            </p>
-                        </div>
-                    </div>
-                </div>
+                <x-faq-accordion question="¿Cuánto dura la membresía?">
+                    Cada membresía tiene duración mensual. Se renueva automáticamente, a menos que decidas cancelarla antes del siguiente ciclo.
+                </x-faq-accordion>
+
                 <!-- Pregunta 3 -->
-                <div>
-                    <button type="button"
-                        class="hs-collapse-toggle inline-flex items-center gap-x-2 bg-black px-4 py-3 text-left text-lg font-medium uppercase text-white md:text-xl"
-                        id="pregunta-l3" aria-expanded="false" aria-controls="pregunta-l3-heading" data-hs-collapse="#pregunta-l3-heading">
-                        <svg class="hs-collapse-open:rotate-90 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                            fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="m9 6 6 6-6 6"></path>
-                        </svg>
-                        ¿Puedo cambiar de nivel?
-                    </button>
-                    <div id="pregunta-l3-heading" class="hs-collapse hidden w-full overflow-hidden uppercase transition-[height] duration-300"
-                        aria-labelledby="pregunta-l3">
-                        <div class="rounded-lg bg-black px-4 py-3">
-                            <p class="text-white dark:text-neutral-400">
-                                 Sí. Puedes cambiar tu nivel de membresía en cualquier momento. El nuevo nivel se activará al inicio del siguiente periodo de facturación. De haber disponibilidad
-                            </p>
-                        </div>
-                    </div>
-                </div>
+                <x-faq-accordion question="¿Puedo cambiar de nivel?">
+                    Sí. Puedes cambiar tu nivel de membresía en cualquier momento. El nuevo nivel se activará al inicio del siguiente periodo de facturación. De haber
+                    disponibilidad.
+                </x-faq-accordion>
+
                 <!-- Pregunta 4 -->
-                <div>
-                    <button type="button"
-                        class="hs-collapse-toggle inline-flex items-center gap-x-2 bg-black px-4 py-3 text-left text-lg font-medium uppercase text-white md:text-xl"
-                        id="pregunta-l4" aria-expanded="false" aria-controls="pregunta-l4-heading" data-hs-collapse="#pregunta-l4-heading">
-                        <svg class="hs-collapse-open:rotate-90 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                            fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="m9 6 6 6-6 6"></path>
-                        </svg>
-                        ¿Qué pasa si cancelo mi membresía?
-                    </button>
-                    <div id="pregunta-l4-heading" class="hs-collapse hidden w-full overflow-hidden uppercase transition-[height] duration-300"
-                        aria-labelledby="pregunta-l4">
-                        <div class="rounded-lg bg-black px-4 py-3">
-                            <p class="text-white dark:text-neutral-400">
-                                 Puedes cancelarla en cualquier momento desde tu cuenta. Sin embargo, ciertos beneficios únicos como bonos en crédito de tienda no se reactivan si vuelves a contratar.
-                            </p>
-                        </div>
-                    </div>
-                </div>
+                <x-faq-accordion question="¿Qué pasa si cancelo mi membresía?">
+                    Puedes cancelarla en cualquier momento desde tu cuenta. Sin embargo, ciertos beneficios únicos como bonos en crédito de tienda no se reactivan
+                    si vuelves a contratar.
+                </x-faq-accordion>
+
                 <!-- Pregunta 5 -->
-                <div>
-                    <button type="button"
-                        class="hs-collapse-toggle inline-flex items-center gap-x-2 bg-black px-4 py-3 text-left text-lg font-medium uppercase text-white md:text-xl"
-                        id="pregunta-l5" aria-expanded="false" aria-controls="pregunta-l5-heading" data-hs-collapse="#pregunta-l5-heading">
-                        <svg class="hs-collapse-open:rotate-90 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                            fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="m9 6 6 6-6 6"></path>
-                        </svg>
-                        ¿Cómo modifico mis intereses dentro de la membresía?
-                    </button>
-                    <div id="pregunta-l5-heading" class="hs-collapse hidden w-full overflow-hidden uppercase transition-[height] duration-300"
-                        aria-labelledby="pregunta-l5">
-                        <div class="rounded-lg bg-black px-4 py-3">
-                            <p class="text-white dark:text-neutral-400">
-                                Debes contactar directamente al gerente de tienda y solicitar los cambios que deseas realizar. El proceso puede tardar entre 48 a 72 horas.
-                            </p>
-                        </div>
-                    </div>
-                </div>
+                <x-faq-accordion question="¿Cómo modifico mis intereses dentro de la membresía?">
+                    Debes contactar directamente al gerente de tienda y solicitar los cambios que deseas realizar. El proceso puede tardar entre 48 a 72 horas.
+                </x-faq-accordion>
+
                 <!-- Pregunta 6 -->
-                <div>
-                    <button type="button"
-                        class="hs-collapse-toggle inline-flex items-center gap-x-2 bg-black px-4 py-3 text-left text-lg font-medium uppercase text-white md:text-xl"
-                        id="pregunta-l6" aria-expanded="false" aria-controls="pregunta-l6-heading" data-hs-collapse="#pregunta-l6-heading">
-                        <svg class="hs-collapse-open:rotate-90 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                            fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="m9 6 6 6-6 6"></path>
-                        </svg>
-                        ¿Cómo activo mi membresía?
-                    </button>
-                    <div id="pregunta-l6-heading" class="hs-collapse hidden w-full overflow-hidden uppercase transition-[height] duration-300"
-                        aria-labelledby="pregunta-l6">
-                        <div class="rounded-lg bg-black px-4 py-3">
-                            <p class="text-white dark:text-neutral-400">
-                                 Una vez que completes el pago, recibirás tu membresía digital directamente en tu wallet (Apple Wallet o Google Wallet). No necesitas tarjeta física.
-                            </p>
-                        </div>
-                    </div>
-                </div>
+                <x-faq-accordion question="¿Cómo activo mi membresía?">
+                    Una vez que completes el pago, se activará tu membresía digital. No necesitas tarjeta física.
+                </x-faq-accordion>
+                {{-- Una vez que completes el pago, recibirás tu membresía digital directamente en tu wallet (Apple Wallet o Google Wallet). No necesitas tarjeta física. --}}
+
                 <!-- Pregunta 7 -->
-                <div>
-                    <button type="button"
-                        class="hs-collapse-toggle inline-flex items-center gap-x-2 bg-black px-4 py-3 text-left text-lg font-medium uppercase text-white md:text-xl"
-                        id="pregunta-l7" aria-expanded="false" aria-controls="pregunta-l7-heading" data-hs-collapse="#pregunta-l7-heading">
-                        <svg class="hs-collapse-open:rotate-90 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                            fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="m9 6 6 6-6 6"></path>
-                        </svg>
-                        ¿Qué necesito para usarla?
-                    </button>
-                    <div id="pregunta-l7-heading" class="hs-collapse hidden w-full overflow-hidden uppercase transition-[height] duration-300"
-                        aria-labelledby="pregunta-l7">
-                        <div class="rounded-lg bg-black px-4 py-3">
-                            <p class="text-white dark:text-neutral-400">
-                                Un smartphone compatible con wallets digitales (Apple Wallet, Google Wallet). Todo es digital y práctico.
-                            </p>
-                        </div>
-                    </div>
-                </div>
+                <x-faq-accordion question="¿Qué necesito para usarla?">
+                    Un smartphone compatible con wallets digitales (Apple Wallet, Google Wallet). Todo es digital y práctico.
+                </x-faq-accordion>
+
                 <!-- Pregunta 8 -->
-                <div>
-                    <button type="button"
-                        class="hs-collapse-toggle inline-flex items-center gap-x-2 bg-black px-4 py-3 text-left text-lg font-medium uppercase text-white md:text-xl"
-                        id="pregunta-l8" aria-expanded="false" aria-controls="pregunta-l8-heading" data-hs-collapse="#pregunta-l8-heading">
-                        <svg class="hs-collapse-open:rotate-90 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                            fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="m9 6 6 6-6 6"></path>
-                        </svg>
-                        ¿Puedo usar mi membresía en tienda física?
-                    </button>
-                    <div id="pregunta-l8-heading" class="hs-collapse hidden w-full overflow-hidden uppercase transition-[height] duration-300"
-                        aria-labelledby="pregunta-l8">
-                        <div class="rounded-lg bg-black px-4 py-3">
-                            <p class="text-white dark:text-neutral-400">
-                                 ¡Sí! Tu membresía digital es válida tanto online como en tienda física.
-                            </p>
-                        </div>
-                    </div>
-                </div>
+                <x-faq-accordion question="¿Puedo usar mi membresía en tienda física?">
+                    ¡Sí! Tu membresía digital es válida tanto online como en tienda física.
+                </x-faq-accordion>
+
             </div>
             <!-- Columna Derecha -->
             <div class="col-span-12 flex flex-col md:col-span-6">
-                <div>
-                    <button type="button"
-                        class="hs-collapse-toggle inline-flex items-center gap-x-2 bg-black px-4 py-3 text-left text-lg font-medium uppercase text-white md:text-xl"
-                        id="pregunta-r1" aria-expanded="false" aria-controls="pregunta-r1-heading" data-hs-collapse="#pregunta-r1-heading">
+                <!-- Pregunta 1 -->
+                <x-faq-accordion question="¿Qué son los créditos en tienda?">
+                    Son puntos acumulables que obtienes al participar en torneos. Puedes usarlos para comprar cualquier producto en tienda sin restricciones.
+                    También puedes pagar entradas a torneos con estos créditos.
+                </x-faq-accordion>
 
-                        <!-- Improved SVG with perfect vertical alignment -->
-                        <svg class="hs-collapse-open:rotate-90 mt-0.5 size-4 flex-shrink-0" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="m9 6 6 6-6 6"></path>
-                        </svg>
-
-                        ¿Qué son los créditos en tienda?
-                    </button>
-                    <div id="pregunta-r1-heading" class="hs-collapse hidden w-full overflow-hidden uppercase transition-[height] duration-300"
-                        aria-labelledby="pregunta-r1">
-                        <div class="rounded-lg bg-black px-4 py-3">
-                            <p class="text-white dark:text-neutral-400">
-                                Son puntos acumulables que obtienes al participar en torneos. Puedes usarlos para comprar cualquier producto en tienda sin restricciones. También puedes pagar entradas a torneos con estos créditos.
-                            </p>
-                        </div>
-                    </div>
-                </div>
                 <!-- Pregunta 2 -->
-                <div>
-                    <button type="button"
-                        class="hs-collapse-toggle inline-flex items-center gap-x-2 bg-black px-4 py-3 text-left text-lg font-medium uppercase text-white md:text-xl"
-                        id="pregunta-r2" aria-expanded="false" aria-controls="pregunta-r2-heading" data-hs-collapse="#pregunta-r2-heading">
-                        <svg class="hs-collapse-open:rotate-90 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                            fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="m9 6 6 6-6 6"></path>
-                        </svg>
-                        ¿Los créditos tienen vigencia?
-                    </button>
-                    <div id="pregunta-r2-heading" class="hs-collapse hidden w-full overflow-hidden uppercase transition-[height] duration-300"
-                        aria-labelledby="pregunta-r2">
-                        <div class="rounded-lg bg-black px-4 py-3">
-                            <p class="text-white dark:text-neutral-400">
-                                 No. Los créditos acumulados no caducan y puedes usarlos cuando quieras, mientras tu cuenta siga activa.
-                            </p>
-                        </div>
-                    </div>
-                </div>
+                <x-faq-accordion question="¿Los créditos tienen vigencia?">
+                    No. Los créditos acumulados no caducan y puedes usarlos cuando quieras, mientras tu cuenta siga activa.
+                </x-faq-accordion>
+
                 <!-- Pregunta 3 -->
-                <div>
-                    <button type="button"
-                        class="hs-collapse-toggle inline-flex items-center gap-x-2 bg-black px-4 py-3 text-left text-lg font-medium uppercase text-white md:text-xl"
-                        id="pregunta-r3" aria-expanded="false" aria-controls="pregunta-r3-heading" data-hs-collapse="#pregunta-r3-heading">
-                        <svg class="hs-collapse-open:rotate-90 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                            fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="m9 6 6 6-6 6"></path>
-                        </svg>
-                        ¿Puedo transferir mis créditos a otro miembro?
-                    </button>
-                    <div id="pregunta-r3-heading" class="hs-collapse hidden w-full overflow-hidden uppercase transition-[height] duration-300"
-                        aria-labelledby="pregunta-r3">
-                        <div class="rounded-lg bg-black px-4 py-3">
-                            <p class="text-white dark:text-neutral-400">
-                                No. Los créditos son personales e intransferibles.
-                            </p>
-                        </div>
-                    </div>
-                </div>
+                <x-faq-accordion question="¿Puedo transferir mis créditos a otro miembro?">
+                    No. Los créditos son personales e intransferibles.
+                </x-faq-accordion>
+
                 <!-- Pregunta 4 -->
-                <div>
-                    <button type="button"
-                        class="hs-collapse-toggle inline-flex items-center gap-x-2 bg-black px-4 py-3 text-left text-lg font-medium uppercase text-white md:text-xl"
-                        id="pregunta-r4" aria-expanded="false" aria-controls="pregunta-r4-heading" data-hs-collapse="#pregunta-r4-heading">
-                        <svg class="hs-collapse-open:rotate-90 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                            fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="m9 6 6 6-6 6"></path>
-                        </svg>
-                        ¿Los torneos incluidos en las membresías caducan?
-                    </button>
-                    <div id="pregunta-r4-heading" class="hs-collapse hidden w-full overflow-hidden uppercase transition-[height] duration-300"
-                        aria-labelledby="pregunta-r4">
-                        <div class="rounded-lg bg-black px-4 py-3">
-                            <p class="text-white dark:text-neutral-400">
-                                 Si los torneos mensuales que incluyen las membresías son para uso del mes en curso, en caso de no usarlos no se acumulan para el siguiente mes.
-                            </p>
-                        </div>
-                    </div>
-                </div>
+                <x-faq-accordion question="¿Los torneos incluidos en las membresías caducan?">
+                    Si los torneos mensuales que incluyen las membresías son para uso del mes en curso, en caso de no usarlos no se acumulan para el siguiente
+                    mes.
+                </x-faq-accordion>
+
                 <!-- Pregunta 5 -->
-                <div>
-                    <button type="button"
-                        class="hs-collapse-toggle inline-flex items-center gap-x-2 bg-black px-4 py-3 text-left text-lg font-medium uppercase text-white md:text-xl"
-                        id="pregunta-r5" aria-expanded="false" aria-controls="pregunta-r5-heading" data-hs-collapse="#pregunta-r5-heading">
-                        <svg class="hs-collapse-open:rotate-90 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                            fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="m9 6 6 6-6 6"></path>
-                        </svg>
-                        ¿Cuántos torneos gratuitos tengo por membresía?
-                    </button>
-                    <div id="pregunta-r5-heading" class="hs-collapse hidden w-full overflow-hidden uppercase transition-[height] duration-300"
-                        aria-labelledby="pregunta-r4">
-                        <div class="rounded-lg bg-black px-4 py-3">
-                            <p class="text-white dark:text-neutral-400">
-                                 Depende del nivel de tu membresía. Cada mes se resetea el contador. Si no usas tus torneos ese mes, no se acumulan para el siguiente.
-                            </p>
-                        </div>
-                    </div>
-                </div>
+                <x-faq-accordion question="¿Cuántos torneos gratuitos tengo por membresía?">
+                    Depende del nivel de tu membresía. Cada mes se resetea el contador. Si no usas tus torneos ese mes, no se acumulan para el siguiente.
+                </x-faq-accordion>
+
                 <!-- Pregunta 6 -->
-                <div>
-                    <button type="button"
-                        class="hs-collapse-toggle inline-flex items-center gap-x-2 bg-black px-4 py-3 text-left text-lg font-medium uppercase text-white md:text-xl"
-                        id="pregunta-r6" aria-expanded="false" aria-controls="pregunta-r6-heading" data-hs-collapse="#pregunta-r6-heading">
-                        <svg class="hs-collapse-open:rotate-90 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                            fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="m9 6 6 6-6 6"></path>
-                        </svg>
-                        ¿Qué pasa si me inscribo a un torneo y no asisto?
-                    </button>
-                    <div id="pregunta-r6-heading" class="hs-collapse hidden w-full overflow-hidden uppercase transition-[height] duration-300"
-                        aria-labelledby="pregunta-r6">
-                        <div class="rounded-lg bg-black px-4 py-3">
-                            <p class="text-white dark:text-neutral-400">
-                                Debes confirmar tu asistencia al menos 2 horas antes del evento. Si no te presentas sin aviso, perderás esa entrada.
-                            </p>
-                        </div>
-                    </div>
-                </div>
+                <x-faq-accordion question="¿Qué pasa si me inscribo a un torneo y no asisto?">
+                    Debes confirmar tu asistencia al menos 2 horas antes del evento. Si no te presentas sin aviso, perderás esa entrada.
+                </x-faq-accordion>
+
                 <!-- Pregunta 7 -->
-                <div>
-                    <button type="button"
-                        class="hs-collapse-toggle inline-flex items-center gap-x-2 bg-black px-4 py-3 text-left text-lg font-medium uppercase text-white md:text-xl"
-                        id="pregunta-r7" aria-expanded="false" aria-controls="pregunta-r7-heading" data-hs-collapse="#pregunta-r7-heading">
-                        <svg class="hs-collapse-open:rotate-90 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                            fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="m9 6 6 6-6 6"></path>
-                        </svg>
-                        ¿Qué es el apartado de producto preferencial?
-                    </button>
-                    <div id="pregunta-r7-heading" class="hs-collapse hidden w-full overflow-hidden uppercase transition-[height] duration-300"
-                        aria-labelledby="pregunta-r7">
-                        <div class="rounded-lg bg-black px-4 py-3">
-                            <p class="text-white dark:text-neutral-400">
-                                Los niveles superiores pueden apartar productos antes de que estén disponibles para venta libre. El número de categorías permitidas depende de tu nivel.
-                            </p>
-                        </div>
-                    </div>
-                </div>
+                <x-faq-accordion question="¿Qué es el apartado preferencial?">
+                    Los niveles superiores pueden apartar productos antes de que estén disponibles para venta libre. El número de categorías permitidas depende de
+                    tu nivel.
+                </x-faq-accordion>
+
                 <!-- Pregunta 8 -->
-                <div>
-                    <button type="button"
-                        class="hs-collapse-toggle inline-flex items-center gap-x-2 bg-black px-4 py-3 text-left text-lg font-medium uppercase text-white md:text-xl"
-                        id="pregunta-r8" aria-expanded="false" aria-controls="pregunta-r8-heading" data-hs-collapse="#pregunta-r8-heading">
-                        <svg class="hs-collapse-open:rotate-90 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                            fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="m9 6 6 6-6 6"></path>
-                        </svg>
-                        ¿Qué es el psa grading incluido?
-                    </button>
-                    <div id="pregunta-r8-heading" class="hs-collapse hidden w-full overflow-hidden uppercase transition-[height] duration-300"
-                        aria-labelledby="pregunta-r8">
-                        <div class="rounded-lg bg-black px-4 py-3">
-                            <p class="text-white dark:text-neutral-400">
-                                 En niveles altos puedes enviar una o más cartas mensualmente para certificación PSA (hasta cierto monto sin costo). Nosotros nos encargamos del trámite.
-                            </p>
-                        </div>
-                    </div>
-                </div>
+                <x-faq-accordion question="¿Qué es el psa grading incluido?">
+                    En niveles altos puedes enviar una o más cartas mensualmente para certificación PSA (hasta cierto monto sin costo). Nosotros nos encargamos
+                    del trámite.
+                </x-faq-accordion>
+
                 <!-- Pregunta 9 -->
-                <div>
-                    <button type="button"
-                        class="hs-collapse-toggle inline-flex items-center gap-x-2 bg-black px-4 py-3 text-left text-lg font-medium uppercase text-white md:text-xl"
-                        id="pregunta-r9" aria-expanded="false" aria-controls="pregunta-r9-heading" data-hs-collapse="#pregunta-r9-heading">
-                        <svg class="hs-collapse-open:rotate-90 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                            fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="m9 6 6 6-6 6"></path>
-                        </svg>
-                        ¿Puedo puedo mostrar mi colección en tienda?
-                    </button>
-                    <div id="pregunta-r9-heading" class="hs-collapse hidden w-full overflow-hidden uppercase transition-[height] duration-300"
-                        aria-labelledby="pregunta-r9">
-                        <div class="rounded-lg bg-black px-4 py-3">
-                            <p class="text-white dark:text-neutral-400">
-                                Sí, este beneficio está disponible para el nivel más alto de membresía. Puedes coordinarlo con el equipo de tienda.
-                            </p>
-                        </div>
-                    </div>
-                </div>
+                <x-faq-accordion question="¿Puedo mostrar mi colección en tienda?">
+                    Sí, este beneficio está disponible para el nivel más alto de membresía. Puedes coordinarlo con el equipo de tienda.
+                </x-faq-accordion>
+
             </div>
         </div>
 
