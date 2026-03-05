@@ -12,3 +12,7 @@ a {
   height: auto !important;     /* mantiene proporción */
   display: block;
 }
+
+[x-cloak] {
+  display: none
+}
