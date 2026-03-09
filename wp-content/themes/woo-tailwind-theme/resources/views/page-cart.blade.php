@@ -76,8 +76,8 @@
                                                 @else
                                                     <div class="transform transition-all duration-300 hover:scale-105">{!! $thumbnail !!}</div>
                                                 @endif
-                                                <button onclick="removeCartItem('{{ $cart_item_key }}')"
-                                                    class="absolute -right-2 -top-2 transform rounded-full bg-red-500 p-1 text-white opacity-0 shadow-lg transition-opacity duration-300 hover:scale-110 hover:bg-red-600 hover:shadow-red-500/30 group-hover:opacity-100"
+                                                <button type="button" data-key="{{ $cart_item_key }}"
+                                                    class="remove-cart-item absolute -right-2 -top-2 transform rounded-full bg-red-500 p-1 text-white opacity-0 shadow-lg transition-opacity duration-300 hover:scale-110 hover:bg-red-600 hover:shadow-red-500/30 group-hover:opacity-100"
                                                     aria-label="{{ sprintf(__('Eliminar %s', 'woocommerce'), $product->get_name()) }}">
                                                     <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
@@ -332,6 +332,14 @@
     @endpush
 
     <script>
+        document.addEventListener('click', (e) => {
+            const btn = e.target.closest('.remove-cart-item');
+            if (!btn) return;
+
+            const key = btn.dataset.key;
+            removeCartItem(key);
+        });
+
         function removeCartItem(key) {
             if (confirm('¿Estás seguro de que deseas eliminar este producto de tu carrito?')) {
                 jQuery.ajax({
