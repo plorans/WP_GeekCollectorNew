@@ -67,12 +67,12 @@ collect(['setup', 'filters'])
     });
 
 
-add_action('after_setup_theme', function () {
-    add_filter('wc_get_template', function ($located, $template_name, $args, $template_path, $default_path) {
-        error_log("WC carga plantilla: {$template_name} -> {$located}");
-        return $located;
-    }, 10, 5);
-});
+// add_action('after_setup_theme', function () {
+//     add_filter('wc_get_template', function ($located, $template_name, $args, $template_path, $default_path) {
+//         error_log("WC carga plantilla: {$template_name} -> {$located}");
+//         return $located;
+//     }, 10, 5);
+// });
 
 // add_action('template_redirect', function() {
 //     wp_die('', '', 503);
