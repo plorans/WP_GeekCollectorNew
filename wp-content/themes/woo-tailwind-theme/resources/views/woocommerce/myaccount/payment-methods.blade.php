@@ -56,6 +56,12 @@
     }
 @endphp
 
+@php
+    $tokens = WC_Payment_Tokens::get_customer_tokens($user_id, 'stripe');
+    error_log('User ID: ' . $user_id);
+    error_log('Tokens: ' . print_r($tokens, true));
+@endphp
+
 <div class="payment-methods-container">
     @if (count($saved_methods))
         <div class="animate-fade-in mb-10 overflow-x-auto rounded-lg shadow-lg">

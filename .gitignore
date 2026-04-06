@@ -1,6 +1,7 @@
 # WordPress core
 /wp-admin/
 /wp-includes/
+/wp-content/languages/
 /license.txt
 /readme.html
 /wp-activate.php
@@ -84,4 +85,5 @@ Thumbs.db
 *.tmp
 *.temp
 wp-content/themes/woo-tailwind-theme/assets/pass/google-wallet-key.json
-
+wp-content/themes/woo-tailwind-theme/resources/views/goldin.blade.php
+wp-content/db.php
