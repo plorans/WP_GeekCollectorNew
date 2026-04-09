@@ -82,7 +82,7 @@ Template Name: Stats
                         <option value="onepiece" @selected($currentTcg === 'onepiece')>One Piece</option>
                         <option value="riftbound" @selected($currentTcg === 'riftbound')>Riftbound</option>
                         <option value="magic" @selected($currentTcg === 'magic')>Magic The Gathering</option>
-                        <option value="magic" @selected($currentTcg === 'magic-commander')>MTG - Commander</option>
+                        <option value="mtg-commander" @selected($currentTcg === 'magic-commander')>MTG - Commander</option>
                         <option value="dragonball" @selected($currentTcg === 'dragonball')>Dragon Ball</option>
                         <option value="pokemon" @selected($currentTcg === 'pokemon')>Pokemon</option>
                         <option value="lorcana" @selected($currentTcg === 'lorcana')>Lorcana</option>
