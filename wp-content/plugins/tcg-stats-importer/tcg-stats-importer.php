@@ -517,13 +517,13 @@ function tcg_stats_upload_page()
                     <select name="tcg" id="tcg" required>
                         <option value="">— Select TCG —</option>
                         <option value="onepiece">One Piece</option>
+                        <option value="magic">Magic</option>
+                        <option value="digimon">MTG - Commander</option>
+                        <option value="riftbound">RiftBound</option>
                         <option value="dragonball">Dragon Ball</option>
-                        <option value="digimon">Digimon</option>
                         <option value="pokemon">Pokémon</option>
                         <option value="lorcana">Lorcana</option>
                         <option value="starwars">Star Wars</option>
-                        <option value="magic">Magic</option>
-                        <option value="riftbound">RiftBound</option>
                         <option value="gundam">Gundam</option>
                     </select>
                 </td>

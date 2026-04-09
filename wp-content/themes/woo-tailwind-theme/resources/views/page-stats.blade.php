@@ -1,4 +1,4 @@
-{{-- 
+{{--
 Template Name: Stats
 --}}
 
@@ -82,8 +82,8 @@ Template Name: Stats
                         <option value="onepiece" @selected($currentTcg === 'onepiece')>One Piece</option>
                         <option value="riftbound" @selected($currentTcg === 'riftbound')>Riftbound</option>
                         <option value="magic" @selected($currentTcg === 'magic')>Magic The Gathering</option>
+                        <option value="magic" @selected($currentTcg === 'magic-commander')>MTG - Commander</option>
                         <option value="dragonball" @selected($currentTcg === 'dragonball')>Dragon Ball</option>
-                        <option value="digimon" @selected($currentTcg === 'digimon')>Digimon</option>
                         <option value="pokemon" @selected($currentTcg === 'pokemon')>Pokemon</option>
                         <option value="lorcana" @selected($currentTcg === 'lorcana')>Lorcana</option>
                         <option value="starwars" @selected($currentTcg === 'starwars')>Star Wars</option>
@@ -193,47 +193,50 @@ Template Name: Stats
                         </body>
                     </table>
                 </div>
-                <div class="max-h-[450px] overflow-scroll rounded-xl bg-[#252524] px-2 py-4">
-                    <div class="px-2"><span class="text-3xl font-semibold text-orange-500">Torneo #2 </span> <br> <span class="text-white">de la Semana</span></div>
-                    <table class="mt-5 w-full" id="statsTable-2">
-                        <thead class="border-b border-white pb-2">
-                            <tr class="w-full gap-2 text-white">
-                                <th class="px-2">#</th>
-                                <th class="px-3">Jugador</th>
-                                <th class="px-2">Puntos</th>
-                                <th class="px-3">OMW%</th>
-                            </tr>
-                        </thead>
 
-                        @php  $i = 0; @endphp
-
-                        <body>
-                            @foreach ($torneo2 as $torneo)
-                                @php $i += 1; @endphp
-
-                                <tr class="stat-row text-center text-white">
-                                    <td>{{ $i }}</td>
-                                    <td class="jugador max-w-29 py-1 text-left">
-                                        @if ($torneo['geek_tag'] || $isAdmin)
-                                            <div class="flex min-w-0 items-center gap-2">
-                                                <img src="{{ gc_get_avatar_url($torneo['geek_tag']) }}" alt="" class="h-5 w-5 shrink-0 rounded-full object-cover"
-                                                    loading="lazy">
-                                                <span class="line-clamp-1">
-                                                    {{ $torneo['jugador'] }}
-                                                </span>
-                                            </div>
-                                        @else
-                                            <span class="text-sm text-gray-500">Sin usuario Geek</span>
-                                        @endif
-                                    </td>
-
-                                    <td>{{ $torneo['puntos'] }}</td>
-                                    <td>{{ $torneo['omw'] }}%</td>
+                @if ($torneo2->count() > 0)
+                    <div class="max-h-[450px] overflow-scroll rounded-xl bg-[#252524] px-2 py-4">
+                        <div class="px-2"><span class="text-3xl font-semibold text-orange-500">Torneo #2 </span> <br> <span class="text-white">de la Semana</span></div>
+                        <table class="mt-5 w-full" id="statsTable-2">
+                            <thead class="border-b border-white pb-2">
+                                <tr class="w-full gap-2 text-white">
+                                    <th class="px-2">#</th>
+                                    <th class="px-3">Jugador</th>
+                                    <th class="px-2">Puntos</th>
+                                    <th class="px-3">OMW%</th>
                                 </tr>
-                            @endforeach
-                        </body>
-                    </table>
-                </div>
+                            </thead>
+
+                            @php  $i = 0; @endphp
+
+                            <body>
+                                @foreach ($torneo2 as $torneo)
+                                    @php $i += 1; @endphp
+
+                                    <tr class="stat-row text-center text-white">
+                                        <td>{{ $i }}</td>
+                                        <td class="jugador max-w-29 py-1 text-left">
+                                            @if ($torneo['geek_tag'] || $isAdmin)
+                                                <div class="flex min-w-0 items-center gap-2">
+                                                    <img src="{{ gc_get_avatar_url($torneo['geek_tag']) }}" alt="" class="h-5 w-5 shrink-0 rounded-full object-cover"
+                                                        loading="lazy">
+                                                    <span class="line-clamp-1">
+                                                        {{ $torneo['jugador'] }}
+                                                    </span>
+                                                </div>
+                                            @else
+                                                <span class="text-sm text-gray-500">Sin usuario Geek</span>
+                                            @endif
+                                        </td>
+
+                                        <td>{{ $torneo['puntos'] }}</td>
+                                        <td>{{ $torneo['omw'] }}%</td>
+                                    </tr>
+                                @endforeach
+                            </body>
+                        </table>
+                    </div>
+                @endif
                 <div class="max-h-[450px] overflow-scroll rounded-xl bg-[#252524] px-6 py-4 md:col-span-2">
                     <div>
                         <span class="text-3xl font-semibold text-orange-500">
@@ -241,7 +244,7 @@ Template Name: Stats
                         </span>
                         <br>
                         @if ($semestreDate)
-                            <span class="text-white capitalize">
+                            <span class="capitalize text-white">
                                 {{ $semestreDate['start']->translatedFormat('F Y') }}
                                 -
                                 {{ $semestreDate['end']->translatedFormat('F Y') }}
