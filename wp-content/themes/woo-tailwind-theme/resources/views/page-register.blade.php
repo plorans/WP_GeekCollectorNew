@@ -72,7 +72,6 @@
 
                     @php do_action('woocommerce_register_form_end') @endphp
 
-                    {{-- <div class="cf-turnstile" data-sitekey="0x4AAAAAACMifqRVcwd32BaJ"></div> --}}
                     <button type="submit" name="register" value="Register"
                         class="w-full rounded-full bg-gradient-to-r from-yellow-400 to-red-400 px-2 py-3 font-bold text-white">
                         REGISTRARSE
