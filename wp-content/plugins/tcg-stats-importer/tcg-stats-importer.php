@@ -204,13 +204,13 @@ function tcg_stats_upload_page()
         $allowed_tcgs = [
             'onepiece',
             'dragonball',
-            'digimon',
             'pokemon',
             'lorcana',
             'starwars',
             'magic',
             'riftbound',
             'gundam',
+            'magic-commander',
         ];
 
         if (!in_array($tcg, $allowed_tcgs, true)) {
@@ -518,7 +518,7 @@ function tcg_stats_upload_page()
                         <option value="">— Select TCG —</option>
                         <option value="onepiece">One Piece</option>
                         <option value="magic">Magic</option>
-                        <option value="digimon">MTG - Commander</option>
+                        <option value="magic-commander">MTG - Commander</option>
                         <option value="riftbound">RiftBound</option>
                         <option value="dragonball">Dragon Ball</option>
                         <option value="pokemon">Pokémon</option>

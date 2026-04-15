@@ -82,7 +82,7 @@ Template Name: Stats
                         <option value="onepiece" @selected($currentTcg === 'onepiece')>One Piece</option>
                         <option value="riftbound" @selected($currentTcg === 'riftbound')>Riftbound</option>
                         <option value="magic" @selected($currentTcg === 'magic')>Magic The Gathering</option>
-                        <option value="mtg-commander" @selected($currentTcg === 'magic-commander')>MTG - Commander</option>
+                        <option value="magic-commander" @selected($currentTcg === 'magic-commander')>MTG - Commander</option>
                         <option value="dragonball" @selected($currentTcg === 'dragonball')>Dragon Ball</option>
                         <option value="pokemon" @selected($currentTcg === 'pokemon')>Pokemon</option>
                         <option value="lorcana" @selected($currentTcg === 'lorcana')>Lorcana</option>
@@ -150,7 +150,11 @@ Template Name: Stats
 
             <div class="mb-6 text-right text-sm text-gray-400">Es necesario tener usuario de geek para ver las posiciones.</div>
 
-            <div class="mb-10 grid grid-cols-1 gap-4 md:grid-cols-4 lg:max-h-[470px]">
+            @php
+                $hasTorneo2 = $torneo2->count() > 0;
+            @endphp
+
+            <div class="md:grid-cols-{{ $hasTorneo2 ? '4' : '3' }} mb-10 grid grid-cols-1 gap-4 lg:max-h-[470px]">
                 <div class="max-h-[450px] overflow-scroll rounded-xl bg-[#252524] px-2 py-4">
                     <div class="pl-2"><span class="text-3xl font-semibold text-orange-500">Torneo #1 </span> <br> <span class="text-white">de la Semana</span></div>
 
@@ -237,7 +241,7 @@ Template Name: Stats
                         </table>
                     </div>
                 @endif
-                <div class="max-h-[450px] overflow-scroll rounded-xl bg-[#252524] px-6 py-4 md:col-span-2">
+                <div class="max-h-[450px] overflow-scroll rounded-xl bg-[#252524] px-6 py-4 {{ $hasTorneo2 ? 'md:col-span-2' : 'md:col-span-2 md:col-start-2' }}">
                     <div>
                         <span class="text-3xl font-semibold text-orange-500">
                             Leaderboard Semestral
@@ -256,7 +260,7 @@ Template Name: Stats
                         @endif
                     </div>
 
-                    <table class="" id="statsTable-global">
+                    <table class="w-full" id="statsTable-global">
                         <thead class="border-b border-white">
                             <tr class="gap-2 text-white">
                                 <th class="px-3">#</th>
